@@ -1,0 +1,19 @@
+{
+  "name": "atk",
+  "version": "1.0.0",
+  "description": "Asobo Toolkit",
+  "main": "index.js",
+  "dependencies": {
+    "@frida/uglifyify": "^7.0.1",
+    "frida": "^15.0.4",
+    "frida-inject": "^0.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run-script build && C: && cd \"C:/Program Files (x86)/THQ/Disney-Pixar/Ratatouille/Rat/\" && frida -f overlay.exe -l \"D:/programming/widberg/atk/atk.js\" --no-pause",
+    "build": "frida-compile . -o atk.js -c -S"
+  },
+  "author": "widberg",
+  "license": "MIT"
+}
