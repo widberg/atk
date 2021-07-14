@@ -30,6 +30,8 @@ pip3 install frida-tools
 npm install -g frida
 ```
 
+now download [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js) from this repo
+
 ### Running
 
 Replace the FUEL example data with whatever is appropriate for the game you are running.
