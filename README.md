@@ -14,7 +14,7 @@ Asobo Toolkit
 
 ### Prerequisites
 
-* [Frida](https://github.com/frida/frida)
+* [Frida](https://github.com/frida/frida) with Node.js bindings
 * [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js)
 
 ### Running
@@ -35,7 +35,7 @@ frida -n FUEL.exe -l atk.js --no-pause
 
 ##### Option 2) Launch the game with instrumentation
 
-This option will not work on all games. You may have to circumvent DRM to launch the game directly.
+This option will not work on all games. You may have to circumvent DRM to launch the game directly. Ratatouille in particular does not like being launched as a child process.
 
 ```sh
 frida -f FUEL.exe -l atk.js --no-pause
