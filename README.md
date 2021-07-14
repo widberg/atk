@@ -14,8 +14,21 @@ Asobo Toolkit
 
 ### Prerequisites
 
+Run the commands below the list to install everything.
+
+* Node.js 8.x or newer
+* Python3.x
 * [Frida](https://github.com/frida/frida) with Node.js bindings
 * [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js)
+
+Using [winget](https://github.com/microsoft/winget-cli) or manual installation
+
+```sh
+winget install node
+winget install python3
+pip3 install frida-tools
+npm install -g frida
+```
 
 ### Running
 
