@@ -27,6 +27,8 @@ winget install python3
 pip3 install frida-tools
 ```
 
+You may need to add a directory to your Path environment variable to run Frida, pip should warn you if this is the case, from the command line. Check out [this StackOverflow answer](https://stackoverflow.com/a/36160069/3997768) if you are getting the `'frida' is not recognized as an internal or external command, operable program or batch file.` error and need help.
+
 now download [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js) from this repo
 
 ### Running
