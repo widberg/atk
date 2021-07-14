@@ -17,7 +17,7 @@ Asobo Toolkit
 Run the commands below the list to install everything.
 
 * [Node.js](https://nodejs.org/) 8.x or newer
-* [Python3.x](https://www.python.org/)
+* [Python](https://www.python.org/)3.x
 * [Frida](https://github.com/frida/frida) with Node.js bindings
 * [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js)
 
