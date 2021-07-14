@@ -2,53 +2,53 @@
 (function (global){(function (){
 var e = [];
 
-const t = {
+const n = {
   "FUEL.exe": () => {
-    const t = new NativePointer("0x00a7c080"), n = new NativeFunction(new NativePointer("0x0069a590"), "bool", [ "pointer", "pointer", "uint32" ], "stdcall"), r = new NativePointer("0x0069a400");
+    const n = new NativePointer("0x00a7c080"), t = new NativeFunction(new NativePointer("0x0069a590"), "bool", [ "pointer", "pointer", "uint32" ], "stdcall"), r = new NativePointer("0x0069a400");
     return {
       runCommand: e => {
-        n(t.readPointer(), Memory.allocUtf8String(e), 0);
+        t(n.readPointer(), Memory.allocUtf8String(e), 0);
       },
       interceptRegisterCommand: () => Interceptor.attach(r, {
-        onEnter: t => {
+        onEnter: n => {
           e.push(this.context.edi.readUtf8String());
         }
       })
     };
   },
   "WALL-E.exe": () => {
-    const t = new NativePointer("0x0092e738"), n = new NativeFunction(new NativePointer("0x004546b0"), "bool", [ "pointer", "pointer" ], "stdcall"), r = new NativePointer("0x00476580");
+    const n = new NativePointer("0x0092e738"), t = new NativeFunction(new NativePointer("0x004546b0"), "bool", [ "pointer", "pointer" ], "stdcall"), r = new NativePointer("0x00476580");
     return {
       runCommand: e => {
-        n(t.readPointer(), Memory.allocUtf8String(e));
+        t(n.readPointer(), Memory.allocUtf8String(e));
       },
       interceptRegisterCommand: () => Interceptor.attach(r, {
-        onEnter: t => {
-          e.push(t[0].readUtf8String());
+        onEnter: n => {
+          e.push(n[0].readUtf8String());
         }
       })
     };
   },
   "overlay.exe": () => {
-    const t = new NativePointer("0x007de8a0"), n = new NativeFunction(new NativePointer("0x005a6e20"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall"), r = new NativePointer("0x005a6a70");
+    const n = new NativePointer("0x007de8a0"), t = new NativeFunction(new NativePointer("0x005a6e20"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall"), r = new NativePointer("0x005a6a70");
     return {
       runCommand: e => {
-        n(t.readPointer(), Memory.allocUtf8String(e), 0);
+        t(n.readPointer(), Memory.allocUtf8String(e), 0);
       },
       interceptRegisterCommand: () => Interceptor.attach(r, {
-        onEnter: t => {
-          e.push(t[0].readUtf8String());
+        onEnter: n => {
+          e.push(n[0].readUtf8String());
         }
       })
     };
   }
 };
 
-var n = t[Process.enumerateModules()[0].name]() || {};
+var t = n[Process.enumerateModules()[0].name]();
 
-n.interceptRegisterCommand && (n.interceptRegisterCommand(), global.dumpCommandNames = () => {
+t ? (t.interceptRegisterCommand && (t.interceptRegisterCommand(), global.dumpCommandNames = () => {
   console.log(e);
-}), n.runCommand && (global.runCommand = n.runCommand);
+}), t.runCommand && (global.runCommand = t.runCommand)) : console.log("Unknown executable name. Unable to instrument.");
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1]);
