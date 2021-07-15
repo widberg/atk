@@ -35,19 +35,17 @@ now download [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.j
 
 Replace the FUEL example data with whatever is appropriate for the game you are running.
 
-#### Instrument
-
 Choose one of the 2 options.
 
 Double check that you are running Frida from the correct directory. Ideally you will run Frida from the directory containing the executable and `atk.js`.
 
-##### Option 1) Instrument an already running game (Recommended)
+#### Option 1) Instrument an already running game (Recommended)
 
 ```sh
 frida -n FUEL.exe -l atk.js --no-pause
 ```
 
-##### Option 2) Launch the game with instrumentation
+#### Option 2) Launch the game with instrumentation
 
 This option will not work on all games. You may have to circumvent DRM/Anti-debug to launch the game directly. Ratatouille in particular does not like being launched as a child process.
 
@@ -55,7 +53,7 @@ This option will not work on all games. You may have to circumvent DRM/Anti-debu
 frida -f FUEL.exe -l atk.js --no-pause
 ```
 
-#### REPL
+### REPL
 
 Once Frida has instrumented the game you should be greeted with a repl:
 
