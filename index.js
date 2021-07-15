@@ -4,6 +4,7 @@ const games = {
   "FUEL.exe": () => {
     const fuelModule = Process.enumerateModules()[0];
     Memory.protect(fuelModule.base, fuelModule.size, "rwx");
+    var isDemo = false;
     
     var nppGlobalCommandState;
     var nppGlobalCommandStatePattern = "a1 ?? ?? ?? ?? d9 05 ?? ?? 9d 00 6a 00 d9 1d ?? ?? a7 00 68 ?? ?? 9c 00 50 c6 05 ?? ?? a7 00 00 e8 3a 13 01 00 83 05 ?? ?? a7 00 01 80 3d 79 ?? a6 00 00 75 f7 e8 85 f9 ff ff e8 ?? 71 19 00 84 c0";
@@ -15,7 +16,7 @@ const games = {
       nppGlobalCommandStateScanResults = Memory.scanSync(fuelModule.base, fuelModule.size, nppGlobalCommandStatePattern);
       if (nppGlobalCommandStateScanResults.length != 0) {
         nppGlobalCommandState = new NativePointer('0x00a754e0');
-        console.log("Using demo hook for nppGlobalCommandStatePattern");
+        isDemo = true;
       } else {
         console.log("Could not locate the nppGlobalCommandState. Aborting...");
         return;
@@ -62,9 +63,11 @@ const games = {
     var nfRunCommandScanResults = Memory.scanSync(fuelModule.base, fuelModule.size, nfRunCommandPattern);
     if (nfRunCommandScanResults.length != 0) {
       nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer", "uint32"], 'stdcall');
-    } else {
+    } else if (isDemo) {
       nfRunCommand = new NativeFunction(new NativePointer('0x0069b7a0'), "bool", ["pointer", "pointer", "uint32"], 'stdcall');
-      console.log("Using demo hook for nfRunCommand");
+    } else {
+      console.log("Could not locate the nfRunCommand. Aborting...");
+      return;
     }
 
     global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
@@ -109,9 +112,11 @@ const games = {
     var npRegisterCommandScanResults = Memory.scanSync(fuelModule.base, fuelModule.size, npRegisterCommandPattern);
     if (npRegisterCommandScanResults.length != 0) {
       npRegisterCommand = npRegisterCommandScanResults[0].address;
-    } else {
+    } else if (isDemo) {
       npRegisterCommand = new NativePointer('0x0069b610');
-      console.log("Using demo hook for npRegisterCommand");
+    } else {
+      console.log("Could not locate the npRegisterCommand. Aborting...");
+      return;
     }
 
     Interceptor.attach(npRegisterCommand, {
