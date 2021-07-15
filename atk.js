@@ -3,7 +3,7 @@
 var e = [];
 
 const n = {
-  "FUEL.exe": () => {
+  "fuel.exe": () => {
     const n = Process.enumerateModules()[0];
     Memory.protect(n.base, n.size, "rwx");
     var o, t, a = !1, r = "a1 ?? ?? ?? ?? d9 05 ?? ?? 9d 00 6a 00 d9 1d ?? ?? a7 00 68 ?? ?? 9c 00 50 c6 05 ?? ?? a7 00 00 e8 3a 13 01 00 83 05 ?? ?? a7 00 01 80 3d 79 ?? a6 00 00 75 f7 e8 85 f9 ff ff e8 ?? 71 19 00 84 c0", i = Memory.scanSync(n.base, n.size, r);
@@ -20,8 +20,8 @@ const n = {
     global.runCommand = e => {
       t(o.readPointer(), Memory.allocUtf8String(e), 0);
     };
-    var d = Memory.scanSync(n.base, n.size, "83 ec 10 53 55 6a 10 e8 ?? ?? 21 00 33 db 83 c4 04 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08 8b e8 eb 02 33 ed 33 c0 3b fb 74 07 8b d7 e8 ?? ?? ?? ff 89 45 00 8b 44 24 20 89 45 08 8b c7 56");
-    if (0 != d.length) l = d[0].address; else {
+    var s = Memory.scanSync(n.base, n.size, "83 ec 10 53 55 6a 10 e8 ?? ?? 21 00 33 db 83 c4 04 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08 8b e8 eb 02 33 ed 33 c0 3b fb 74 07 8b d7 e8 ?? ?? ?? ff 89 45 00 8b 44 24 20 89 45 08 8b c7 56");
+    if (0 != s.length) l = s[0].address; else {
       if (!a) return void console.log("Could not locate the npRegisterCommand. Aborting...");
       l = new NativePointer("0x0069b610");
     }
@@ -33,11 +33,15 @@ const n = {
       console.log(e);
     };
   },
-  "WALL-E.exe": () => {
-    const n = new NativePointer("0x0092e738"), o = new NativeFunction(new NativePointer("0x004546b0"), "bool", [ "pointer", "pointer" ], "stdcall"), t = new NativePointer("0x00476580");
+  "wall-e.exe": () => {
+    const n = Process.enumerateModules()[0];
+    Memory.protect(n.base, n.size, "rwx");
+    var o = new NativePointer("0x0092e738").readPointer(), t = new NativeFunction(new NativePointer("0x00476580"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
     global.runCommand = e => {
-      o(n.readPointer(), Memory.allocUtf8String(e));
-    }, Interceptor.attach(t, {
+      t(o.readPointer(), Memory.allocUtf8String(e), 0);
+    };
+    var a = new NativePointer("0x004763b0");
+    Interceptor.attach(a, {
       onEnter: n => {
         e.push(n[0].readUtf8String());
       }
@@ -59,7 +63,7 @@ const n = {
   }
 };
 
-var o = n[Process.enumerateModules()[0].name];
+var o = n[Process.enumerateModules()[0].name.toLowerCase()];
 
 o ? o() : console.log("Unknown executable name. Unable to instrument.");
 

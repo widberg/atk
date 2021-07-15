@@ -7,7 +7,7 @@ Asobo Toolkit
 ## Supported Games
 
 * Ratatouille (EN:US)
-* WALL-E (EN:US) - Steam release is not supported at this time (WIP)
+* WALL-E (RU)
 * FUEL (EN:US,RU,Steam Demo)
 
 ## Getting Started
@@ -16,7 +16,7 @@ Asobo Toolkit
 
 Run the commands below the list to install everything.
 
-* [Python](https://www.python.org/)3.x
+* [Python](https://www.python.org/) 3.x
 * [Frida](https://github.com/frida/frida)
 * [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js)
 
