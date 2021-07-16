@@ -53,6 +53,12 @@ This option will not work on all games. You may have to circumvent DRM/Anti-debu
 frida -f FUEL.exe -l atk.js --no-pause
 ```
 
+To pass arguments to the game EXE on launch. Ex: `-W`
+
+```sh
+frida -f FUEL.exe -l atk.js --no-pause -- -W
+```
+
 ### REPL
 
 Once Frida has instrumented the game you should be greeted with a repl:
@@ -80,3 +86,9 @@ Print the array of command names that have been registered while the game was in
 ```sh
 [Local::FUEL.exe]-> dumpCommandNames()
 ```
+
+## Development
+
+Edit the `index.js` file then run `npm run-script build` to generate a new minified `atk.js` script.
+
+Pull requests are welcome.
