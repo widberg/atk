@@ -176,7 +176,7 @@ const games = {
     const walleModule = Process.enumerateModules()[0];
     Memory.protect(walleModule.base, walleModule.size, "rwx");
     
-    var nppGlobalCommandState = new NativePointer('0x0092e738').readPointer();
+    var nppGlobalCommandState = new NativePointer('0x0092e738');
     // 0x0092e738 Scene
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
