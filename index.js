@@ -262,7 +262,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(this.context.edi.readUtf8String());
+        commandNames.push(args[0].readUtf8String());
       }
     });
 
@@ -284,14 +284,6 @@ const games = {
 
     // 0xXXXXXXX RU.exe
     // 
-
-    Interceptor.attach(npRegisterCommand, {
-      onEnter: args => { // [name, callback, comment]
-        commandNames.push(args[0].readUtf8String());
-      }
-    });
-
-    global.dumpCommandNames = () => { console.log(commandNames); };
   },
 
   /////////
