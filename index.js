@@ -176,7 +176,15 @@ const games = {
     const walleModule = Process.enumerateModules()[0];
     Memory.protect(walleModule.base, walleModule.size, "rwx");
     
-    var nppGlobalCommandState = new NativePointer('0x0092e738');
+    var nppGlobalCommandState;
+    var nppGlobalCommandStatePattern = "8b 0d ?? ?? ?? ?? 6a 00 68 24 f9 89 00 e8 a5 c7 d6 ff 8b 16 8b 42 48 6a 00 8b ce ff d0 80 be 6c 12 00 00 00 0f 84 81 00 00 00 8b 0d 38 e7 92 00 6a 00 68 24 f9 89 00 e8 7b c7 d6 ff c6 86 f5 13";
+    var nppGlobalCommandStateScanResults = Memory.scanSync(walleModule.base, walleModule.size, nppGlobalCommandStatePattern);
+    if (nppGlobalCommandStateScanResults.length != 0) {
+      nppGlobalCommandState = nppGlobalCommandStateScanResults[0].address.add(2).readPointer();
+    } else {
+      console.log("Could not locate the nppGlobalCommandState. Aborting...");
+      return;
+    }
     // 0x0092e738 Scene
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -204,7 +212,16 @@ const games = {
     // 0xXXXXXXX RU.exe
     // 
 
-    var nfRunCommand = new NativeFunction(new NativePointer('0x00476580'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
+    var nfRunCommand;
+    var nfRunCommandPattern = "b8 0c 40 00 00 e8 16 0d 30 00 56 8b f1 57 89 74 24 0c 8d 44 24 14 b9 0f 00 00 00 eb 03 8d 49 00 c6 00 00 05 00 04 00 00 83 e9 01 79 f3 8b bc 24 18 40 00 00 8b c7 8d 50 01 8d a4 24 00 00 00 00";
+    var nfRunCommandScanResults = Memory.scanSync(walleModule.base, walleModule.size, nfRunCommandPattern);
+    if (nfRunCommandScanResults.length != 0) {
+      nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer", "uint32"], 'thiscall');
+    } else {
+      console.log("Could not locate the nfRunCommand. Aborting...");
+      return;
+    }
+
     global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x00476580 Scene
     // #define _BUFFER_SIZE 64
@@ -233,7 +250,23 @@ const games = {
     // 0xXXXXXXX RU.exe
     // 
 
-    var npRegisterCommand = new NativePointer('0x004763b0');
+    var npRegisterCommand;
+    var npRegisterCommandPattern = "83 ec 14 53 55 6a 10 89 4c 24 0c e8 1f 5c 30 00 33 db 83 c4 04 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08 8b e8 eb 02 33 ed 56 57 8b 7c 24 28 3b fb 74 0b 33 d2 8b cf e8 c3 21 fb ff eb 02 33";
+    var npRegisterCommandScanResults = Memory.scanSync(walleModule.base, walleModule.size, npRegisterCommandPattern);
+    if (npRegisterCommandScanResults.length != 0) {
+      npRegisterCommand = npRegisterCommandScanResults[0].address;
+    } else {
+      console.log("Could not locate the npRegisterCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(npRegisterCommand, {
+      onEnter: args => {
+        commandNames.push(this.context.edi.readUtf8String());
+      }
+    });
+
+    global.dumpCommandNames = () => { console.log(commandNames); };
     // 0xXXXXXXXXX Scene
     //
 
