@@ -6,7 +6,7 @@ const games = {
   // FUEL //
   //////////
 
-  "fuel.exe": () => {
+  "fuel": () => {
     const fuelModule = Process.enumerateModules()[0];
     Memory.protect(fuelModule.base, fuelModule.size, "rwx");
     var isDemo = false;
@@ -172,7 +172,7 @@ const games = {
   // WALL-E //
   ////////////
 
-  "wall-e.exe": () => {
+  "wall-e": () => {
     const walleModule = Process.enumerateModules()[0];
 
     for (const module of Process.enumerateModules()) {
@@ -299,7 +299,7 @@ const games = {
   // Rat //
   /////////
 
-  "overlay.exe": () => {
+  "overlay": () => {
     const nppGlobalCommandState = new NativePointer("0x007de8a0");
     const nfRunCommand = new NativeFunction(new NativePointer("0x005a6e20"), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
     const npRegisterCommand = new NativePointer("0x005a6a70");
@@ -316,7 +316,7 @@ const games = {
   }
 };
 
-var gameSetup = games[Process.enumerateModules()[0].name.toLowerCase()];
+var gameSetup = games[Process.enumerateModules()[0].name.toLowerCase().split('.')[0]];
 
 if (gameSetup) {
   gameSetup();
