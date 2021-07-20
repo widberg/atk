@@ -47,7 +47,9 @@ frida -n FUEL.exe -l atk.js --no-pause
 
 #### Option 2) Launch the game with instrumentation
 
-This option will not work on all games. You may have to circumvent DRM/Anti-debug to launch the game directly. Ratatouille in particular does not like being launched as a child process.
+This option will not work on all games. You may have to circumvent DRM/Anti-debug to launch the game directly.
+
+If this option doesn't work, try again but use the full path to the executable. Ex: `-f "D:\SteamLibrary\steamapps\common\FUEL\FUEL.exe"`.
 
 ```sh
 frida -f FUEL.exe -l atk.js --no-pause
