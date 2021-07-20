@@ -11,7 +11,6 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run-script build && C: && cd \"C:/Program Files (x86)/THQ/Disney-Pixar/Ratatouille/Rat/\" && frida -f overlay.exe -l \"D:/programming/widberg/atk/atk.js\" --no-pause",
     "build": "frida-compile . -o atk.js -c -S"
   },
   "author": "widberg",

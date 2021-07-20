@@ -6,9 +6,9 @@ Asobo Toolkit
 
 ## Supported Games
 
-* Ratatouille (EN:US)
+* Ratatouille (US,RU,DE,ES,Scandinavia)
 * WALL-E (RU)
-* FUEL (EN:US,RU,Steam Demo)
+* FUEL (US,RU,Steam,Steam Demo)
 
 ## Getting Started
 
