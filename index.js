@@ -300,7 +300,7 @@ const games = {
   /////////
 
   "overlay": () => {
-    Memory.protect(fuelModule.base, fuelModule.size, "rwx");
+    const ratModule = Process.enumerateModules()[0];
 
     for (const module of Process.enumerateModules()) {
       Memory.protect(module.base, module.size, "rwx");
