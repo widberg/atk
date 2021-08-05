@@ -12,20 +12,20 @@ const o = {
       0 == (c = Memory.scanSync(o.base, o.size, r)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");
       n = new NativePointer("0x00a754e0"), t = !0;
     }
-    var s, l = Memory.scanSync(o.base, o.size, "b8 0c 80 00 00 e8 ?? ?? 21 00 8b 94 24 14 80 00 00 53 56 57 8b bc 24 1c 80 00 00 8d 44 24 18 b9 1f 00 00 00 33 db 88 18 05 00 04 00 00 83 e9 01 79 f4 8b c2 8d 70 01 8a 08 83 c0 01 84 c9 75 f7");
-    if (0 != l.length) a = new NativeFunction(l[0].address, "bool", [ "pointer", "pointer", "uint32" ], "stdcall"); else {
+    var l, i = Memory.scanSync(o.base, o.size, "b8 0c 80 00 00 e8 ?? ?? 21 00 8b 94 24 14 80 00 00 53 56 57 8b bc 24 1c 80 00 00 8d 44 24 18 b9 1f 00 00 00 33 db 88 18 05 00 04 00 00 83 e9 01 79 f4 8b c2 8d 70 01 8a 08 83 c0 01 84 c9 75 f7");
+    if (0 != i.length) a = new NativeFunction(i[0].address, "bool", [ "pointer", "pointer", "uint32" ], "stdcall"); else {
       if (!t) return void console.log("Could not locate the nfRunCommand. Aborting...");
       a = new NativeFunction(new NativePointer("0x0069b7a0"), "bool", [ "pointer", "pointer", "uint32" ], "stdcall");
     }
     global.runCommand = e => {
       a(n.readPointer(), Memory.allocUtf8String(e), 0);
     };
-    var i = Memory.scanSync(o.base, o.size, "83 ec 10 53 55 6a 10 e8 ?? ?? 21 00 33 db 83 c4 04 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08 8b e8 eb 02 33 ed 33 c0 3b fb 74 07 8b d7 e8 ?? ?? ?? ff 89 45 00 8b 44 24 20 89 45 08 8b c7 56");
-    if (0 != i.length) s = i[0].address; else {
+    var s = Memory.scanSync(o.base, o.size, "83 ec 10 53 55 6a 10 e8 ?? ?? 21 00 33 db 83 c4 04 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08 8b e8 eb 02 33 ed 33 c0 3b fb 74 07 8b d7 e8 ?? ?? ?? ff 89 45 00 8b 44 24 20 89 45 08 8b c7 56");
+    if (0 != s.length) l = s[0].address; else {
       if (!t) return void console.log("Could not locate the npRegisterCommand. Aborting...");
-      s = new NativePointer("0x0069b610");
+      l = new NativePointer("0x0069b610");
     }
-    Interceptor.attach(s, {
+    Interceptor.attach(l, {
       onEnter: o => {
         e.push(this.context.edi.readUtf8String());
       }
@@ -52,15 +52,30 @@ const o = {
   overlay: () => {
     const o = Process.enumerateModules()[0];
     for (const e of Process.enumerateModules()) Memory.protect(e.base, e.size, "rwx");
-    var n = Memory.scanSync(o.base, o.size, "b8 0c 44 00 00 e8 d6 8b 0f 00 a1 60 6d 79 00 33 84 24 0c 44 00 00 53 55 89 84 24 10 44 00 00 8b e9 8d 84 24 10 04 00 00 b9 10 00 00 00 8d 49 00 c6 00 00 05 00 04 00 00 49 75 f5 8b 9c 24 18 44");
-    if (0 != n.length && n[0].address.equals(new NativePointer("0x0052e8b0"))) {
+    var n = "b8 0c 44 00 00 e8 d6 8b 0f 00 a1 60 6d 79 00 33 84 24 0c 44 00 00 53 55 89 84 24 10 44 00 00 8b e9 8d 84 24 10 04 00 00 b9 10 00 00 00 8d 49 00 c6 00 00 05 00 04 00 00 49 75 f5 8b 9c 24 18 44", a = Memory.scanSync(o.base, o.size, n);
+    if (0 != a.length && a[0].address.equals(new NativePointer("0x0052e8b0"))) {
       console.log("Garfield");
-      var a = new NativePointer("0x007b2f9c"), t = new NativeFunction(new NativePointer("0x0052e8b0"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
+      var t = new NativePointer("0x007b2f9c"), r = new NativeFunction(new NativePointer("0x0052e8b0"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
       global.runCommand = e => {
-        t(a.readPointer(), Memory.allocUtf8String(e), 0);
+        r(t.readPointer(), Memory.allocUtf8String(e), 0);
       };
-      var r = new NativePointer("0x0052e520");
-      Interceptor.attach(r, {
+      var c = new NativePointer("0x0052e520");
+      Interceptor.attach(c, {
+        onEnter: o => {
+          e.push(o[0].readUtf8String());
+        }
+      }), global.dumpCommandNames = () => {
+        console.log(e);
+      };
+    } else if (n = "8b 44 24 08 8b 54 24 04 8b 89 0c 29 00 00 50 52 e8 ab d6 09 00 c2 08 00 90 90 90 90 90 90 90 90 8b 44 24 08 8b 54 24 04 8b 89 0c 29 00 00 50 52 e8 2b d8 09 00 c2 08 00 90 90 90 90 90 90 90 90", 
+    0 != (a = Memory.scanSync(o.base, o.size, n)).length && a[0].address.equals(new NativePointer("0x0054B420"))) {
+      console.log("CT");
+      t = new NativePointer("0x00724414"), r = new NativeFunction(new NativePointer("0x0054B420"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
+      global.runCommand = e => {
+        r(t.readPointer(), Memory.allocUtf8String(e), 0);
+      };
+      c = new NativePointer("0x0054B1C0");
+      Interceptor.attach(c, {
         onEnter: o => {
           e.push(o[0].readUtf8String());
         }
@@ -69,26 +84,26 @@ const o = {
       };
     } else {
       console.log("Ratatat");
-      var c = !1, s = "8b 0d ?? ?? ?? ?? 6a 00 68 ?? ?? 72 00 c6 05 ?? ?? ?? 00 00 e8 ?? ?? ?? ff 83 05 ?? ?? ?? 00 01 80 3d ?? ?? ?? 00 00 75 f7 e8 ?? a6 ff ff e8 ?? ?? 09 00 84 c0 74 e9 e8 ?? e8 ff ff b0 01 c3 cc", l = Memory.scanSync(o.base, o.size, s);
-      if (0 != l.length) a = l[0].address.add(2).readPointer(); else {
-        if (s = "8b 0d b8 12 78 00 6a 00 68 20 91 6f 00 c6 05 78 22 78 00 00 e8 0c 32 fe ff ff 05 6c 22 78 00 8d 9b 00 00 00 00 a0 a8 3b 79 00 84 c0 75 f7 e8 32 ae ff ff e8 bd 85 fb ff 84 c0 74 e9 e8 e4 e8 ff", 
-        0 == (l = Memory.scanSync(o.base, o.size, s)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");
-        a = new NativePointer("0x007812b8"), c = !0;
+      var l = !1, i = "8b 0d ?? ?? ?? ?? 6a 00 68 ?? ?? 72 00 c6 05 ?? ?? ?? 00 00 e8 ?? ?? ?? ff 83 05 ?? ?? ?? 00 01 80 3d ?? ?? ?? 00 00 75 f7 e8 ?? a6 ff ff e8 ?? ?? 09 00 84 c0 74 e9 e8 ?? e8 ff ff b0 01 c3 cc", s = Memory.scanSync(o.base, o.size, i);
+      if (0 != s.length) t = s[0].address.add(2).readPointer(); else {
+        if (i = "8b 0d b8 12 78 00 6a 00 68 20 91 6f 00 c6 05 78 22 78 00 00 e8 0c 32 fe ff ff 05 6c 22 78 00 8d 9b 00 00 00 00 a0 a8 3b 79 00 84 c0 75 f7 e8 32 ae ff ff e8 bd 85 fb ff 84 c0 74 e9 e8 e4 e8 ff", 
+        0 == (s = Memory.scanSync(o.base, o.size, i)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");
+        t = new NativePointer("0x007812b8"), l = !0;
       }
-      var i = Memory.scanSync(o.base, o.size, "b8 10 40 00 00 e8 ?? ?? ?? 00 a1 ?? ?? 7c 00 33 c4 89 84 24 0c 40 00 00 55 57 8b bc 24 1c 40 00 00 8b e9 89 7c 24 08 8d 44 24 14 b9 0f 00 00 00 c6 00 00 05 00 04 00 00 83 e9 01 79 f3 8b c7 8d");
-      if (0 != i.length) t = new NativeFunction(i[0].address, "bool", [ "pointer", "pointer", "uint32" ], "thiscall"); else {
-        if (!c) return void console.log("Could not locate the nfRunCommand. Aborting...");
-        t = new NativeFunction(new NativePointer("0x005a0c50"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
+      var d = Memory.scanSync(o.base, o.size, "b8 10 40 00 00 e8 ?? ?? ?? 00 a1 ?? ?? 7c 00 33 c4 89 84 24 0c 40 00 00 55 57 8b bc 24 1c 40 00 00 8b e9 89 7c 24 08 8d 44 24 14 b9 0f 00 00 00 c6 00 00 05 00 04 00 00 83 e9 01 79 f3 8b c7 8d");
+      if (0 != d.length) r = new NativeFunction(d[0].address, "bool", [ "pointer", "pointer", "uint32" ], "thiscall"); else {
+        if (!l) return void console.log("Could not locate the nfRunCommand. Aborting...");
+        r = new NativeFunction(new NativePointer("0x005a0c50"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
       }
       global.runCommand = e => {
-        t(a.readPointer(), Memory.allocUtf8String(e), 0);
+        r(t.readPointer(), Memory.allocUtf8String(e), 0);
       };
-      var d = Memory.scanSync(o.base, o.size, "83 ec 18 a1 ?? ?? 7c 00 33 c4 89 44 24 14 53 55 8b 6c 24 24 57 6a 1a 68 ?? ?? 72 00 68 ?? ?? ?? 00 6a 10 89 4c 24 1c e8 ?? ?? fc ff 33 db 83 c4 10 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08");
-      if (0 != d.length) r = d[0].address; else {
-        if (!c) return void console.log("Could not locate the npRegisterCommand. Aborting...");
-        r = new NativePointer("0x005a08a0");
+      var b = Memory.scanSync(o.base, o.size, "83 ec 18 a1 ?? ?? 7c 00 33 c4 89 44 24 14 53 55 8b 6c 24 24 57 6a 1a 68 ?? ?? 72 00 68 ?? ?? ?? 00 6a 10 89 4c 24 1c e8 ?? ?? fc ff 33 db 83 c4 10 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08");
+      if (0 != b.length) c = b[0].address; else {
+        if (!l) return void console.log("Could not locate the npRegisterCommand. Aborting...");
+        c = new NativePointer("0x005a08a0");
       }
-      Interceptor.attach(r, {
+      Interceptor.attach(c, {
         onEnter: o => {
           e.push(o[0].readUtf8String());
         }
