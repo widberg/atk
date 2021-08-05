@@ -7,7 +7,7 @@ Asobo Toolkit
 ## Supported Games
 
 * CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike (Steam)
-* Garfield: A Tail of Two Kitties (US,EU,RU)
+* Garfield: A Tail of Two Kitties/Garfield 2 (US,EU,RU)
 * Ratatouille (US,RU,DE,ES,Scandinavia)
 * WALL-E (RU)
 * FUEL (US,RU,Steam,Steam Demo)
