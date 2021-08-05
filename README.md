@@ -6,7 +6,7 @@ Asobo Toolkit
 
 ## Supported Games
 
-* Garfield (US,EU,RU)
+* Garfield: A Tail of Two Kitties (US,EU,RU)
 * Ratatouille (US,RU,DE,ES,Scandinavia)
 * WALL-E (RU)
 * FUEL (US,RU,Steam,Steam Demo)
