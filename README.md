@@ -11,6 +11,7 @@ Asobo Toolkit
 * Ratatouille (US,RU,DE,ES,Scandinavia)
 * WALL-E (RU)
 * FUEL (US,RU,Steam,Steam Demo)
+* Up (US,RU)
 
 ## Getting Started
 
