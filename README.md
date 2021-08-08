@@ -9,7 +9,7 @@ Asobo Toolkit
 * CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike (Steam)
 * Garfield: A Tail of Two Kitties/Garfield 2 (US,EU,RU)
 * Ratatouille (US,RU,DE,ES,Scandinavia)
-* WALL-E (US,RU,Steam)
+* WALL-E (Steam US,RU)
 * FUEL (US,RU,Steam,Steam Demo)
 * Up (US,RU)
 
