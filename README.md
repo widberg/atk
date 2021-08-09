@@ -13,6 +13,10 @@ Asobo Toolkit
 * FUEL (US,RU,Steam,Steam Demo)
 * Up (US,RU)
 
+## Documentation
+
+The documentation for commands is located on the [atk wiki](https://github.com/widberg/atk/wiki).
+
 ## Getting Started
 
 ### Prerequisites
