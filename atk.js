@@ -98,7 +98,7 @@ const o = {
       global.runCommand = e => {
         r(t.readPointer(), Memory.allocUtf8String(e), 0);
       };
-      var b = Memory.scanSync(o.base, o.size, "83 ec 18 a1 ?? ?? 7c 00 33 c4 89 44 24 14 53 55 8b 6c 24 24 57 6a 1a 68 ?? ?? 72 00 68 ?? ?? ?? 00 6a 10 89 4c 24 1c e8 ?? ?? fc ff 33 db 83 c4 10 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08");
+      var f, b = Memory.scanSync(o.base, o.size, "83 ec 18 a1 ?? ?? 7c 00 33 c4 89 44 24 14 53 55 8b 6c 24 24 57 6a 1a 68 ?? ?? 72 00 68 ?? ?? ?? 00 6a 10 89 4c 24 1c e8 ?? ?? fc ff 33 db 83 c4 10 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08");
       if (0 != b.length) c = b[0].address; else {
         if (!i) return void console.log("Could not locate the npRegisterCommand. Aborting...");
         c = new NativePointer("0x005a08a0");
@@ -109,6 +109,16 @@ const o = {
         }
       }), global.dumpCommandNames = () => {
         console.log(e);
+      };
+      var m = Memory.scanSync(o.base, o.size, "75 53 a1 ?? ?? ?? 00 80 78 1d 00 74 48 53 56 ff 15 ?? ?? 70 00 8b 1d ?? ?? ?? 00 8d 4c 24 0c 51 8b f0 ff 15 ?? ?? 70 00 8b 57 08 52 56 8b cf e8 df fe ff ff 8b 44 24 10 8b 4c 24 0c 6a 00 53 6a");
+      if (0 != m.length) f = m[0].address.add(1); else {
+        if (!i) return void console.log("Could not locate the npModernPopupMenuCondition. Aborting...");
+        f = new NativePointer("0x006051fd").add(1);
+      }
+      global.enableContextMenu = () => {
+        f.writeU8(0);
+      }, global.disableContextMenu = () => {
+        i ? f.writeU8(84) : f.writeU8(83);
       };
     }
   },
