@@ -310,8 +310,6 @@ const games = {
     var results = Memory.scanSync(ratModule.base, ratModule.size, pattern);
     
     if (results.length != 0 && results[0].address.equals(new NativePointer('0x0052e8b0'))) {
-      console.log("Garfield");
-
       var nppGlobalCommandState = new NativePointer('0x007b2f9c');
       // 0x007b2f9c US EU RU
 
@@ -355,8 +353,6 @@ const games = {
       results = Memory.scanSync(ratModule.base, ratModule.size, pattern);
       
       if (results.length != 0 && results[0].address.equals(new NativePointer('0x0054B420'))) {
-        console.log("CT");
-  
         var nppGlobalCommandState = new NativePointer('0x00724414');
         // 0x00724414
   
@@ -396,8 +392,6 @@ const games = {
         //   0xde, 0x74, 0x0c, 0x56
         // };
       } else {
-        console.log("Ratatat");
-
         var isRU = false; // russian version
 
         var nppGlobalCommandState;
