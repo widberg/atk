@@ -96,6 +96,22 @@ Print the array of command names that have been registered while the game was in
 [Local::FUEL.exe]-> dumpCommandNames()
 ```
 
+#### enableContextMenu()
+
+Ratatouille only! Enable the right-click menu present in later games.
+
+```sh
+[Local::overlay.exe]-> enableContextMenu()
+```
+
+#### disableContextMenu()
+
+Ratatouille only! Disable the right-click menu present in later games.
+
+```sh
+[Local::overlay.exe]-> disableContextMenu()
+```
+
 ## Development
 
 [Frida JavaScript API](https://frida.re/docs/javascript-api/)
