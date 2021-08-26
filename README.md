@@ -98,7 +98,7 @@ Print the array of command names that have been registered while the game was in
 
 #### enableContextMenu()
 
-Ratatouille only! Enable the right-click menu present in later games.
+Ratatouille, Garfield: A Tail of Two Kitties/Garfield, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Enable the right-click menu present in later games.
 
 ```sh
 [Local::overlay.exe]-> enableContextMenu()
@@ -106,7 +106,7 @@ Ratatouille only! Enable the right-click menu present in later games.
 
 #### disableContextMenu()
 
-Ratatouille only! Disable the right-click menu present in later games.
+Ratatouille, Garfield: A Tail of Two Kitties/Garfield, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Disable the right-click menu present in later games.
 
 ```sh
 [Local::overlay.exe]-> disableContextMenu()
