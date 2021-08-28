@@ -6,14 +6,14 @@ const o = {
   fuel: () => {
     const o = Process.enumerateModules()[0];
     Memory.protect(o.base, o.size, "rwx");
-    var n, a, t = !1, r = "a1 ?? ?? ?? ?? d9 05 ?? ?? 9d 00 6a 00 d9 1d ?? ?? a7 00 68 ?? ?? 9c 00 50 c6 05 ?? ?? a7 00 00 e8 3a 13 01 00 83 05 ?? ?? a7 00 01 80 3d 79 ?? a6 00 00 75 f7 e8 85 f9 ff ff e8 ?? 71 19 00 84 c0", c = Memory.scanSync(o.base, o.size, r);
-    if (0 != c.length) n = c[0].address.add(1).readPointer(); else {
+    var n, a, t = !1, r = "a1 ?? ?? ?? ?? d9 05 ?? ?? 9d 00 6a 00 d9 1d ?? ?? a7 00 68 ?? ?? 9c 00 50 c6 05 ?? ?? a7 00 00 e8 3a 13 01 00 83 05 ?? ?? a7 00 01 80 3d 79 ?? a6 00 00 75 f7 e8 85 f9 ff ff e8 ?? 71 19 00 84 c0", l = Memory.scanSync(o.base, o.size, r);
+    if (0 != l.length) n = l[0].address.add(1).readPointer(); else {
       if (r = "e0 54 a7 00 68 c0 dc 81 00 52 bf e4 13 9d 00 e8 98 c0 e7 ff e8 73 ae e6 ff 88 44 24 0f 6a 00 68 60 62 9f 00 6a 08 6a 3b ff d6 6a 00 68 68 62 9f 00 6a 08 6a 35 ff d6 6a 00 68 70 62 9f 00 6a 18", 
-      0 == (c = Memory.scanSync(o.base, o.size, r)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");
+      0 == (l = Memory.scanSync(o.base, o.size, r)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");
       n = new NativePointer("0x00a754e0"), t = !0;
     }
-    var i, l = Memory.scanSync(o.base, o.size, "b8 0c 80 00 00 e8 ?? ?? 21 00 8b 94 24 14 80 00 00 53 56 57 8b bc 24 1c 80 00 00 8d 44 24 18 b9 1f 00 00 00 33 db 88 18 05 00 04 00 00 83 e9 01 79 f4 8b c2 8d 70 01 8a 08 83 c0 01 84 c9 75 f7");
-    if (0 != l.length) a = new NativeFunction(l[0].address, "bool", [ "pointer", "pointer", "uint32" ], "stdcall"); else {
+    var c, i = Memory.scanSync(o.base, o.size, "b8 0c 80 00 00 e8 ?? ?? 21 00 8b 94 24 14 80 00 00 53 56 57 8b bc 24 1c 80 00 00 8d 44 24 18 b9 1f 00 00 00 33 db 88 18 05 00 04 00 00 83 e9 01 79 f4 8b c2 8d 70 01 8a 08 83 c0 01 84 c9 75 f7");
+    if (0 != i.length) a = new NativeFunction(i[0].address, "bool", [ "pointer", "pointer", "uint32" ], "stdcall"); else {
       if (!t) return void console.log("Could not locate the nfRunCommand. Aborting...");
       a = new NativeFunction(new NativePointer("0x0069b7a0"), "bool", [ "pointer", "pointer", "uint32" ], "stdcall");
     }
@@ -21,17 +21,24 @@ const o = {
       a(n.readPointer(), Memory.allocUtf8String(e), 0);
     };
     var s = Memory.scanSync(o.base, o.size, "83 ec 10 53 55 6a 10 e8 ?? ?? 21 00 33 db 83 c4 04 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08 8b e8 eb 02 33 ed 33 c0 3b fb 74 07 8b d7 e8 ?? ?? ?? ff 89 45 00 8b 44 24 20 89 45 08 8b c7 56");
-    if (0 != s.length) i = s[0].address; else {
+    if (0 != s.length) c = s[0].address; else {
       if (!t) return void console.log("Could not locate the npRegisterCommand. Aborting...");
-      i = new NativePointer("0x0069b610");
+      c = new NativePointer("0x0069b610");
     }
-    Interceptor.attach(i, {
+    if (Interceptor.attach(c, {
       onEnter: o => {
         e.push(this.context.edi.readUtf8String());
       }
     }), global.dumpCommandNames = () => {
       console.log(e);
-    };
+    }, !t) {
+      var d = Process.findModuleByName("xlive.dll");
+      if (d) {
+        Memory.protect(d.base, d.size, "rwx");
+        var b = Memory.scanSync(d.base, d.size, "8b ff 55 8b ec 83 ec 20 53 56 57 8d 45 e0 33 f6 50 ff 75 0c 8b f9 8b 4d 08 89 75 e0 89 75 e4 89");
+        if (0 != b.length) b[0].address.writeByteArray([ 194, 12, 0 ]); else console.log("Could not locate the npXLiveMemCheck. Assuming you have liveless installed.");
+      } else console.log("Could not locate xlive.dll. Assuming you have liveless installed.");
+    }
   },
   "wall-e": () => {
     const o = Process.enumerateModules()[0];
@@ -58,19 +65,19 @@ const o = {
       global.runCommand = e => {
         r(t.readPointer(), Memory.allocUtf8String(e), 0);
       };
-      var c = new NativePointer("0x0052e520");
-      Interceptor.attach(c, {
+      var l = new NativePointer("0x0052e520");
+      Interceptor.attach(l, {
         onEnter: o => {
           e.push(o[0].readUtf8String());
         }
       }), global.dumpCommandNames = () => {
         console.log(e);
       };
-      var i = new NativePointer("0x005EBAED").add(1);
+      var c = new NativePointer("0x005EBAED").add(1);
       global.enableContextMenu = () => {
-        i.writeU8(0);
+        c.writeU8(0);
       }, global.disableContextMenu = () => {
-        i.writeU8(86);
+        c.writeU8(86);
       };
     } else if (n = "8b 44 24 08 8b 54 24 04 8b 89 0c 29 00 00 50 52 e8 ab d6 09 00 c2 08 00 90 90 90 90 90 90 90 90 8b 44 24 08 8b 54 24 04 8b 89 0c 29 00 00 50 52 e8 2b d8 09 00 c2 08 00 90 90 90 90 90 90 90 90", 
     0 != (a = Memory.scanSync(o.base, o.size, n)).length && a[0].address.equals(new NativePointer("0x0054B420"))) {
@@ -78,41 +85,41 @@ const o = {
       global.runCommand = e => {
         r(t.readPointer(), Memory.allocUtf8String(e), 0);
       };
-      c = new NativePointer("0x0054B1C0");
-      Interceptor.attach(c, {
+      l = new NativePointer("0x0054B1C0");
+      Interceptor.attach(l, {
         onEnter: o => {
           e.push(o[0].readUtf8String());
         }
       }), global.dumpCommandNames = () => {
         console.log(e);
       };
-      i = new NativePointer("0x0060AE7D").add(1);
+      c = new NativePointer("0x0060AE7D").add(1);
       global.enableContextMenu = () => {
-        i.writeU8(0);
+        c.writeU8(0);
       }, global.disableContextMenu = () => {
-        i.writeU8(86);
+        c.writeU8(86);
       };
     } else {
-      var l = !1, s = "8b 0d ?? ?? ?? ?? 6a 00 68 ?? ?? 72 00 c6 05 ?? ?? ?? 00 00 e8 ?? ?? ?? ff 83 05 ?? ?? ?? 00 01 80 3d ?? ?? ?? 00 00 75 f7 e8 ?? a6 ff ff e8 ?? ?? 09 00 84 c0 74 e9 e8 ?? e8 ff ff b0 01 c3 cc", d = Memory.scanSync(o.base, o.size, s);
+      var i = !1, s = "8b 0d ?? ?? ?? ?? 6a 00 68 ?? ?? 72 00 c6 05 ?? ?? ?? 00 00 e8 ?? ?? ?? ff 83 05 ?? ?? ?? 00 01 80 3d ?? ?? ?? 00 00 75 f7 e8 ?? a6 ff ff e8 ?? ?? 09 00 84 c0 74 e9 e8 ?? e8 ff ff b0 01 c3 cc", d = Memory.scanSync(o.base, o.size, s);
       if (0 != d.length) t = d[0].address.add(2).readPointer(); else {
         if (s = "8b 0d b8 12 78 00 6a 00 68 20 91 6f 00 c6 05 78 22 78 00 00 e8 0c 32 fe ff ff 05 6c 22 78 00 8d 9b 00 00 00 00 a0 a8 3b 79 00 84 c0 75 f7 e8 32 ae ff ff e8 bd 85 fb ff 84 c0 74 e9 e8 e4 e8 ff", 
         0 == (d = Memory.scanSync(o.base, o.size, s)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");
-        t = new NativePointer("0x007812b8"), l = !0;
+        t = new NativePointer("0x007812b8"), i = !0;
       }
       var b = Memory.scanSync(o.base, o.size, "b8 10 40 00 00 e8 ?? ?? ?? 00 a1 ?? ?? 7c 00 33 c4 89 84 24 0c 40 00 00 55 57 8b bc 24 1c 40 00 00 8b e9 89 7c 24 08 8d 44 24 14 b9 0f 00 00 00 c6 00 00 05 00 04 00 00 83 e9 01 79 f3 8b c7 8d");
       if (0 != b.length) r = new NativeFunction(b[0].address, "bool", [ "pointer", "pointer", "uint32" ], "thiscall"); else {
-        if (!l) return void console.log("Could not locate the nfRunCommand. Aborting...");
+        if (!i) return void console.log("Could not locate the nfRunCommand. Aborting...");
         r = new NativeFunction(new NativePointer("0x005a0c50"), "bool", [ "pointer", "pointer", "uint32" ], "thiscall");
       }
       global.runCommand = e => {
         r(t.readPointer(), Memory.allocUtf8String(e), 0);
       };
       var f = Memory.scanSync(o.base, o.size, "83 ec 18 a1 ?? ?? 7c 00 33 c4 89 44 24 14 53 55 8b 6c 24 24 57 6a 1a 68 ?? ?? 72 00 68 ?? ?? ?? 00 6a 10 89 4c 24 1c e8 ?? ?? fc ff 33 db 83 c4 10 3b c3 74 0f 89 18 89 58 04 89 58 0c 89 58 08");
-      if (0 != f.length) c = f[0].address; else {
-        if (!l) return void console.log("Could not locate the npRegisterCommand. Aborting...");
-        c = new NativePointer("0x005a08a0");
+      if (0 != f.length) l = f[0].address; else {
+        if (!i) return void console.log("Could not locate the npRegisterCommand. Aborting...");
+        l = new NativePointer("0x005a08a0");
       }
-      Interceptor.attach(c, {
+      Interceptor.attach(l, {
         onEnter: o => {
           e.push(o[0].readUtf8String());
         }
@@ -120,14 +127,14 @@ const o = {
         console.log(e);
       };
       var u = Memory.scanSync(o.base, o.size, "75 53 a1 ?? ?? ?? 00 80 78 1d 00 74 48 53 56 ff 15 ?? ?? 70 00 8b 1d ?? ?? ?? 00 8d 4c 24 0c 51 8b f0 ff 15 ?? ?? 70 00 8b 57 08 52 56 8b cf e8 df fe ff ff 8b 44 24 10 8b 4c 24 0c 6a 00 53 6a");
-      if (0 != u.length) i = u[0].address.add(1); else {
-        if (!l) return void console.log("Could not locate the npModernPopupMenuCondition. Aborting...");
-        i = new NativePointer("0x006051fd").add(1);
+      if (0 != u.length) c = u[0].address.add(1); else {
+        if (!i) return void console.log("Could not locate the npModernPopupMenuCondition. Aborting...");
+        c = new NativePointer("0x006051fd").add(1);
       }
       global.enableContextMenu = () => {
-        i.writeU8(0);
+        c.writeU8(0);
       }, global.disableContextMenu = () => {
-        l ? i.writeU8(84) : i.writeU8(83);
+        i ? c.writeU8(84) : c.writeU8(83);
       };
     }
   },
