@@ -166,6 +166,33 @@ const games = {
     //   0x0e, 0x03, 0x68, 0x98, 0x96, 0xf8, 0x8e, 0xd7, 0xe6, 0xaa,
     //   0x6a, 0xef, 0x3d, 0x64
     // };
+
+    if (!isDemo) {
+      var xliveModule = Process.findModuleByName("xlive.dll");
+
+      if (xliveModule) {
+        Memory.protect(xliveModule.base, xliveModule.size, "rwx");
+        var npXLiveMemCheckPattern = "8b ff 55 8b ec 83 ec 20 53 56 57 8d 45 e0 33 f6 50 ff 75 0c 8b f9 8b 4d 08 89 75 e0 89 75 e4 89";
+        var npXLiveMemCheckScanResults = Memory.scanSync(xliveModule.base, xliveModule.size, npXLiveMemCheckPattern);
+        if (npXLiveMemCheckScanResults.length != 0) {
+          var npXLiveMemCheck = npXLiveMemCheckScanResults[0].address;
+          npXLiveMemCheck.writeByteArray([0xC2, 0x0C, 0x00]);
+        } else {
+          console.log("Could not locate the npXLiveMemCheck. Assuming you have liveless installed.");
+        }
+      } else {
+        console.log("Could not locate xlive.dll. Assuming you have liveless installed.");
+      }
+    }
+
+    // 0x004f36b3 xlive.dll
+    // #define _BUFFER_SIZE 32
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x8b, 0xff, 0x55, 0x8b, 0xec, 0x83, 0xec, 0x20, 0x53, 0x56,
+    //   0x57, 0x8d, 0x45, 0xe0, 0x33, 0xf6, 0x50, 0xff, 0x75, 0x0c,
+    //   0x8b, 0xf9, 0x8b, 0x4d, 0x08, 0x89, 0x75, 0xe0, 0x89, 0x75,
+    //   0xe4, 0x89
+    // };
   },
 
   ////////////
