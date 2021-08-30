@@ -536,6 +536,8 @@ const games = {
         //   0xb0, 0x01, 0xc3, 0xcc
         // };
 
+        // 0x FR/NL
+
         // 0x007dd8a0 US 2k
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -571,6 +573,8 @@ const games = {
         //   0x00, 0x84, 0xc0, 0x74, 0xe9, 0xe8, 0x49, 0xe8, 0xff, 0xff,
         //   0xb0, 0x01, 0xc3, 0xcc
         // };
+
+        // 0x FR/NL 2k
 
         // 0x007812b8 RU.dll
         // #define _BUFFER_SIZE 64
@@ -645,6 +649,8 @@ const games = {
         //   0xf3, 0x8b, 0xc7, 0x8d
         // };
 
+        // 0x FR/NL
+
         // 0x005a6e20 US 2k
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -680,6 +686,8 @@ const games = {
         //   0x00, 0x05, 0x00, 0x04, 0x00, 0x00, 0x83, 0xe9, 0x01, 0x79,
         //   0xf3, 0x8b, 0xc7, 0x8d
         // };
+
+        // 0x FR/NL 2k
 
         // 0x005a0c50 RU.dll
         // #define _BUFFER_SIZE 64
@@ -760,6 +768,8 @@ const games = {
         //   0x0c, 0x89, 0x58, 0x08
         // };
 
+        // 0x FR/NL
+
         // 0x005a6a70 US 2k
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -795,6 +805,8 @@ const games = {
         //   0xc3, 0x74, 0x0f, 0x89, 0x18, 0x89, 0x58, 0x04, 0x89, 0x58,
         //   0x0c, 0x89, 0x58, 0x08
         // };
+
+        // 0x FR/NL 2k
 
         // 0x005a08a0 RU.dll
         // #define _BUFFER_SIZE 64
@@ -882,6 +894,8 @@ const games = {
         //   0x6a, 0x00, 0x53, 0x6a
         // };
 
+        // 0x FR/NL
+
         // 0x00666f8d US 2k
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -917,6 +931,8 @@ const games = {
         //   0xff, 0xff, 0x8b, 0x44, 0x24, 0x10, 0x8b, 0x4c, 0x24, 0x0c,
         //   0x6a, 0x00, 0x53, 0x6a
         // };
+
+        // 0x FR/NL 2k
 
         // 0x006051fd RU.dll
         // #define _BUFFER_SIZE 64
