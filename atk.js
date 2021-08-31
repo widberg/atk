@@ -99,7 +99,7 @@ const o = {
       }, global.disableContextMenu = () => {
         l.writeU8(86);
       };
-    } else if (n = "4d 55 4d 4d 59 00 00 00 42 4c 4f 43 4b 33 00 00 42 4c 4f 43 4b 32 00 00 42 4c 4f 43 4b 31 00 00 42 4c 4f 43 4b 30 00 00 54 68 65 20 4d 75 6d 6d 79 00 00 00 35 32 38 33 35 00 00 00 ?? 3a 5c ??", 
+    } else if (n = "4d 55 4d 4d 59 00 00 00 42 4c 4f 43 4b 33 00 00 42 4c 4f 43 4b 32 00 00 42 4c 4f 43 4b 31 00 00 42 4c 4f 43 4b 30 00 00 54 68 65 20 4d 75 6d 6d 79 00 00 00 35 32 38 33 35 00 00 00", 
     0 != (a = Memory.scanSync(o.base, o.size, n)).length) {
       var i = "8b 0d ?? ?? 6b 00 68 ?? ?? 6a 00 e8 ?? 0d fe ff ff 05 ?? ?? 6b 00 a0 ?? ?? 6c 00 84 c0 75 f7 8b 0d ?? ?? 6b 00 8d 41 18 8b 0d ?? ?? 6b 00 50 e8 ?? 00 fd ff 85 c0 74 1c 8b 0d ?? ?? 6b 00 83 c0";
       if (0 == (b = Memory.scanSync(o.base, o.size, i)).length) return void console.log("Could not locate the nppGlobalCommandState. Aborting...");

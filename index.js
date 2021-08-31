@@ -469,7 +469,7 @@ const games = {
       //   0x54, 0x24, 0x0c, 0x6a
       // };
       } else {
-        pattern = "4d 55 4d 4d 59 00 00 00 42 4c 4f 43 4b 33 00 00 42 4c 4f 43 4b 32 00 00 42 4c 4f 43 4b 31 00 00 42 4c 4f 43 4b 30 00 00 54 68 65 20 4d 75 6d 6d 79 00 00 00 35 32 38 33 35 00 00 00 ?? 3a 5c ??";
+        pattern = "4d 55 4d 4d 59 00 00 00 42 4c 4f 43 4b 33 00 00 42 4c 4f 43 4b 32 00 00 42 4c 4f 43 4b 31 00 00 42 4c 4f 43 4b 30 00 00 54 68 65 20 4d 75 6d 6d 79 00 00 00 35 32 38 33 35 00 00 00";
         results = Memory.scanSync(ratModule.base, ratModule.size, pattern);
         // Aggregate
         // 0x006A3EB8 PL
