@@ -320,6 +320,24 @@ const games = {
 
     // 0xXXXXXXX RU.exe
     // 
+    
+    var npDPadCheats;
+    var npDPadCheatsPattern = "50 41 54 43 48 5f 46 4c 41 47 53 5f 70 5f 44 5f 62 5f 4c 5f 4d 5f 63";
+    var npDPadCheatsScanResults = Memory.scanSync(walleModule.base, walleModule.size, npDPadCheatsPattern);
+    if (npDPadCheatsScanResults.length != 0) {
+      npDPadCheats = npDPadCheatsScanResults[0].address.add(22);
+    } else {
+      console.log("Could not locate the npDPadCheats. Aborting...");
+      return;
+    }
+
+    global.enableDPadCheats = () => {
+      npDPadCheats.writeU8(0x43);
+    };
+
+    global.disableDPadCheats = () => {
+      npDPadCheats.writeU8(0x63);
+    };
   },
 
   /////////

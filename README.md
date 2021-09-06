@@ -113,6 +113,22 @@ Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: 
 [Local::overlay.exe]-> disableContextMenu()
 ```
 
+#### enableDPadCheats()
+
+WALL-E only! Enable the DPad cheats.
+
+```sh
+[Local::WALL-E.exe]-> enableDPadCheats()
+```
+
+#### disableDPadCheats()
+
+WALL-E only! Disable the DPad cheats.
+
+```sh
+[Local::WALL-E.exe]-> disableDPadCheats()
+```
+
 ## Development
 
 [Frida JavaScript API](https://frida.re/docs/javascript-api/)
