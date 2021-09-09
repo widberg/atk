@@ -209,7 +209,7 @@ const o = {
       console.log(e);
     };
   },
-  APlagueTaleInnocence_x64: () => {
+  aplaguetaleinnocence_x64: () => {
     const o = Process.enumerateModules()[0];
     for (const e of Process.enumerateModules()) Memory.protect(e.base, e.size, "rwx");
     var n, a = Memory.scanSync(o.base, o.size, "48 8b 0d ?? ?? bb 00 4c 8d 9c 24 f0 00 00 00 49 8b 5b 38 49 8b 6b 40 49 8b 73 48 49 8b e3 41 5f 41 5e 41 5d 41 5c 5f e9 ?? ?? dc ff cc cc cc cc cc cc cc cc cc 48 8b c4 55 57 41 54 41 56 41 57");
