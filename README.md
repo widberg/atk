@@ -6,6 +6,7 @@ Asobo Toolkit
 
 ## Supported Games
 
+* Sitting Ducks (EU,PL,RU)
 * The Mummy: The Animated Series (PL,RU)
 * CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike (Steam)
 * Garfield: A Tail of Two Kitties/Garfield 2 (US,EU,RU)
