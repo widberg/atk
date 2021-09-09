@@ -14,6 +14,7 @@ Asobo Toolkit
 * WALL-E (Steam US,RU)
 * FUEL (US,RU,Steam,Steam Demo)
 * Up (US,RU)
+* A Plague Tale: Innocence (EGS,Steam)
 
 ## Documentation
 
