@@ -1547,7 +1547,7 @@ const games = {
     var nfRunCommandPattern = "44 89 44 24 18 48 89 54 24 10 55 56 57 41 54 41 55 41 56 41 57 48 8d ac 24 90 7e ff ff b8 70 82 00 00 e8 ?? ?? 67 00 48 2b e0 48 c7 44 24 30 fe ff ff ff 48 89 9c 24 b0 82 00 00 0f 29 b4 24 60";
     var nfRunCommandScanResults = Memory.scanSync(aptModule.base, aptModule.size, nfRunCommandPattern);
     if (nfRunCommandScanResults.length != 0) {
-      nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer", "int64"], 'fastcall');
+      nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer", "int64"], 'win64');
     } else {
       console.log("Could not locate the nfRunCommand. Aborting...");
       return;
