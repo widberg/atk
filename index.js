@@ -1500,7 +1500,9 @@ const games = {
     var nppGlobalCommandStatePattern = "48 8b 0d ?? ?? bb 00 4c 8d 9c 24 f0 00 00 00 49 8b 5b 38 49 8b 6b 40 49 8b 73 48 49 8b e3 41 5f 41 5e 41 5d 41 5c 5f e9 ?? ?? dc ff cc cc cc cc cc cc cc cc cc 48 8b c4 55 57 41 54 41 56 41 57";
     var nppGlobalCommandStateScanResults = Memory.scanSync(aptModule.base, aptModule.size, nppGlobalCommandStatePattern);
     if (nppGlobalCommandStateScanResults.length != 0) {
-      nppGlobalCommandState = nppGlobalCommandStateScanResults[0].address.add(2).readPointer();
+      var callsiteAddress = nppGlobalCommandStateScanResults[0].address;
+      var offsetGlobalCommandState = callsiteAddress.add(3).readU32();
+      nppGlobalCommandState = callsiteAddress.add(offsetGlobalCommandState + 7);
     } else {
       console.log("Could not locate the nppGlobalCommandState. Aborting...");
       return;
