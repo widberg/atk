@@ -1489,7 +1489,7 @@ const games = {
   // APlagueTaleInnocence_x64 //
   ////////////
 
-  "APlagueTaleInnocence_x64": () => {
+  "aplaguetaleinnocence_x64": () => {
     const aptModule = Process.enumerateModules()[0];
 
     for (const module of Process.enumerateModules()) {
