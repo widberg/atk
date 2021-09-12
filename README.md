@@ -99,6 +99,22 @@ Print the array of command names that have been registered while the game was in
 [Local::FUEL.exe]-> dumpCommandNames()
 ```
 
+#### enableLogCommands()
+
+Log commands to the console as they run.
+
+```sh
+[Local::FUEL.exe]-> enableLogCommands()
+```
+
+#### disableLogCommands()
+
+Stop logging commands to the console as they run.
+
+```sh
+[Local::FUEL.exe]-> disableLogCommands()
+```
+
 #### enableContextMenu()
 
 Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Enable the right-click menu present in later games.
