@@ -1,4 +1,5 @@
 var commandNames = [];
+var logCommands = false;
 
 const games = {
 
@@ -74,6 +75,14 @@ const games = {
       console.log("Could not locate the nfRunCommand. Aborting...");
       return;
     }
+
+    Interceptor.attach(nfRunCommand, {
+      onEnter: args => {
+        if (logCommands) {
+          console.log(args[1].readUtf8String());
+        }
+      }
+    });
 
     global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x0069a590 EN
@@ -256,6 +265,14 @@ const games = {
 
     var nfRunCommand = new NativeFunction(walleModule.base.add(0x00476580).sub(0x00400000), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
+    Interceptor.attach(nfRunCommand, {
+      onEnter: args => {
+        if (logCommands) {
+          console.log(args[0].readUtf8String());
+        }
+      }
+    });
+
     global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x00476580 Scene
     // #define _BUFFER_SIZE 64
@@ -361,6 +378,14 @@ const games = {
 
       var nfRunCommand = new NativeFunction(new NativePointer('0x0052e8b0'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
+      Interceptor.attach(nfRunCommand, {
+        onEnter: args => {
+          if (logCommands) {
+            console.log(args[0].readUtf8String());
+          }
+        }
+      });
+
       global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
       // 0x0052e8b0 US EU RU
       // #define _BUFFER_SIZE 64
@@ -428,6 +453,14 @@ const games = {
         // 0x00724414
   
         var nfRunCommand = new NativeFunction(new NativePointer('0x0054B420'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
+
+        Interceptor.attach(nfRunCommand, {
+          onEnter: args => {
+            if (logCommands) {
+              console.log(args[0].readUtf8String());
+            }
+          }
+        });
   
         global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
         // 0x0054B420
@@ -584,6 +617,15 @@ const games = {
             console.log("Could not locate the nfRunCommand. Aborting...");
             return;
           }
+
+          Interceptor.attach(nfRunCommand, {
+            onEnter: args => {
+              if (logCommands) {
+                console.log(args[0].readUtf8String());
+              }
+            }
+          });
+
           global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
           // Aggregate
           // #define _BUFFER_SIZE 64
@@ -793,6 +835,15 @@ const games = {
               console.log("Could not locate the nfRunCommand. Aborting...");
               return;
             }
+
+            Interceptor.attach(nfRunCommand, {
+              onEnter: args => {
+                if (logCommands) {
+                  console.log(args[0].readUtf8String());
+                }
+              }
+            });
+            
             global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
             // Aggregate
             // #define _BUFFER_SIZE 64
@@ -1036,6 +1087,14 @@ const games = {
               console.log("Could not locate the nfRunCommand. Aborting...");
               return;
             }
+
+            Interceptor.attach(nfRunCommand, {
+              onEnter: args => {
+                if (logCommands) {
+                  console.log(args[0].readUtf8String());
+                }
+              }
+            });
 
             global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
             // Aggregate
@@ -1426,6 +1485,14 @@ const games = {
 
     var nfRunCommand = new NativeFunction(new NativePointer('0x0041c080'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
+    Interceptor.attach(nfRunCommand, {
+      onEnter: args => {
+        if (logCommands) {
+          console.log(args[0].readUtf8String());
+        }
+      }
+    });
+
     global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x0041c080 US
     // #define _BUFFER_SIZE 64
@@ -1552,6 +1619,15 @@ const games = {
       console.log("Could not locate the nfRunCommand. Aborting...");
       return;
     }
+
+    Interceptor.attach(nfRunCommand, {
+      onEnter: args => {
+        if (logCommands) {
+          console.log(this.context.rdx.readUtf8String());
+        }
+      }
+    });
+
     global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // Aggregate
     // #define _BUFFER_SIZE 64
@@ -1640,13 +1716,53 @@ const games = {
     //   0xfa, 0xa7, 0xf2, 0xff, 0xeb, 0x17, 0x48, 0x8b, 0x05, 0xf9,
     //   0xc6, 0xdf, 0x00, 0x48
     // };
-  }
+  } //,
+
+  // ////////////
+  // // Rush //
+  // ////////////
+
+  // "rushx64": () => {
+  //   const rushModule = Process.enumerateModules()[0];
+
+  //   for (const module of Process.enumerateModules()) {
+  //     Memory.protect(module.base, module.size, "rwx");
+  //   }
+
+  //   var nppGlobalCommandState = new NativePointer('');
+
+
+
+  //   var nfRunCommand = new NativeFunction(new NativePointer(''), "bool", ["pointer", "pointer", "uint32"], 'win64');
+
+  //   global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+    
+
+
+  //   var npRegisterCommand = new NativePointer('');
+
+  //   Interceptor.attach(npRegisterCommand, {
+  //     onEnter: args => {
+  //       commandNames.push(this.context.rdx.readUtf8String());
+  //     }
+  //   });
+
+  //   global.dumpCommandNames = () => { console.log(commandNames); };
+  // }
 };
 
 var gameSetup = games[Process.enumerateModules()[0].name.toLowerCase().split('.')[0]];
 
 if (gameSetup) {
   gameSetup();
+
+  global.enableLogCommands = () => {
+    logCommands = true;
+  };
+
+  global.disableLogCommands = () => {
+    logCommands = false;
+  };
 } else {
   console.log("Unknown executable name. Unable to instrument.");
 }
