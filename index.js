@@ -79,7 +79,12 @@ const games = {
     Interceptor.attach(nfRunCommand, {
       onEnter: args => {
         if (logCommands) {
-          console.log(args[1].readUtf8String());
+          this.command_line = args[1].readAnsiString();
+        }
+      },
+      onLeave: (retval) => {
+        if (logCommands) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
     });
@@ -135,7 +140,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(this.context.edi.readUtf8String());
+        commandNames.push(this.context.r7.readAnsiString());
       }
     });
 
@@ -268,7 +273,12 @@ const games = {
     Interceptor.attach(nfRunCommand, {
       onEnter: args => {
         if (logCommands) {
-          console.log(args[0].readUtf8String());
+          this.command_line = args[0].readAnsiString();
+        }
+      },
+      onLeave: (retval) => {
+        if (logCommands) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
     });
@@ -315,7 +325,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(args[0].readUtf8String());
+        commandNames.push(args[0].readAnsiString());
       }
     });
 
@@ -381,7 +391,12 @@ const games = {
       Interceptor.attach(nfRunCommand, {
         onEnter: args => {
           if (logCommands) {
-            console.log(args[0].readUtf8String());
+            this.command_line = args[0].readAnsiString();
+          }
+        },
+        onLeave: (retval) => {
+          if (logCommands) {
+            console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
           }
         }
       });
@@ -403,7 +418,7 @@ const games = {
 
       Interceptor.attach(npRegisterCommand, {
         onEnter: args => {
-          commandNames.push(args[0].readUtf8String());
+          commandNames.push(args[0].readAnsiString());
         }
       });
 
@@ -457,7 +472,12 @@ const games = {
         Interceptor.attach(nfRunCommand, {
           onEnter: args => {
             if (logCommands) {
-              console.log(args[0].readUtf8String());
+              this.command_line = args[0].readAnsiString();
+            }
+          },
+          onLeave: (retval) => {
+            if (logCommands) {
+              console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
             }
           }
         });
@@ -479,7 +499,7 @@ const games = {
   
         Interceptor.attach(npRegisterCommand, {
           onEnter: args => {
-            commandNames.push(args[0].readUtf8String());
+            commandNames.push(args[0].readAnsiString());
           }
         });
   
@@ -621,7 +641,12 @@ const games = {
           Interceptor.attach(nfRunCommand, {
             onEnter: args => {
               if (logCommands) {
-                console.log(args[0].readUtf8String());
+                this.command_line = args[0].readAnsiString();
+              }
+            },
+            onLeave: (retval) => {
+              if (logCommands) {
+                console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
               }
             }
           });
@@ -675,7 +700,7 @@ const games = {
 
           Interceptor.attach(npRegisterCommand, {
             onEnter: args => {
-              commandNames.push(args[0].readUtf8String());
+              commandNames.push(args[0].readAnsiString());
             }
           });
           global.dumpCommandNames = () => { console.log(commandNames); };
@@ -839,7 +864,12 @@ const games = {
             Interceptor.attach(nfRunCommand, {
               onEnter: args => {
                 if (logCommands) {
-                  console.log(args[0].readUtf8String());
+                  this.command_line = args[0].readAnsiString();
+                }
+              },
+              onLeave: (retval) => {
+                if (logCommands) {
+                  console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
                 }
               }
             });
@@ -905,7 +935,7 @@ const games = {
 
             Interceptor.attach(npRegisterCommand, {
               onEnter: args => {
-                commandNames.push(args[0].readUtf8String());
+                commandNames.push(args[0].readAnsiString());
               }
             });
             global.dumpCommandNames = () => { console.log(commandNames); };
@@ -1091,7 +1121,12 @@ const games = {
             Interceptor.attach(nfRunCommand, {
               onEnter: args => {
                 if (logCommands) {
-                  console.log(args[0].readUtf8String());
+                  this.command_line = args[0].readAnsiString();
+                }
+              },
+              onLeave: (retval) => {
+                if (logCommands) {
+                  console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
                 }
               }
             });
@@ -1211,7 +1246,7 @@ const games = {
 
             Interceptor.attach(npRegisterCommand, {
               onEnter: args => {
-                commandNames.push(args[0].readUtf8String());
+                commandNames.push(args[0].readAnsiString());
               }
             });
 
@@ -1488,7 +1523,12 @@ const games = {
     Interceptor.attach(nfRunCommand, {
       onEnter: args => {
         if (logCommands) {
-          console.log(args[0].readUtf8String());
+          this.command_line = args[0].readAnsiString();
+        }
+      },
+      onLeave: (retval) => {
+        if (logCommands) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
     });
@@ -1522,7 +1562,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(args[0].readUtf8String());
+        commandNames.push(args[0].readAnsiString());
       }
     });
 
@@ -1623,7 +1663,12 @@ const games = {
     Interceptor.attach(nfRunCommand, {
       onEnter: args => {
         if (logCommands) {
-          console.log(this.context.rdx.readUtf8String());
+          this.command_line = this.context.r2.readAnsiString();
+        }
+      },
+      onLeave: (retval) => {
+        if (logCommands) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
     });
@@ -1677,7 +1722,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(this.context.rdx.readUtf8String());
+        commandNames.push(this.context.r2.readAnsiString());
       }
     });
     global.dumpCommandNames = () => { console.log(commandNames); };
@@ -1743,7 +1788,7 @@ const games = {
 
   //   Interceptor.attach(npRegisterCommand, {
   //     onEnter: args => {
-  //       commandNames.push(this.context.rdx.readUtf8String());
+  //       commandNames.push(this.context.rdx.readAnsiString());
   //     }
   //   });
 
