@@ -999,18 +999,22 @@ const games = {
             var npModernPopupMenuConditionPattern = "f6 05 ?? ?? 5d 00 01 74 b6 53 ff 15 28 ?? 59 00 5f 5e 5d b8 01 00 00 00 5b c2 10 00 c6 05 ?? ?? 5d 00 01 eb 9a 5f 5e 5d 33 c0 5b c2 10 00 81 fe 01 02 00 00 77 89 74 87 8b c6 2d 04 01 00 00 0f";
             var npModernPopupMenuConditionScanResults = Memory.scanSync(ratModule.base, ratModule.size, npModernPopupMenuConditionPattern);
             if (npModernPopupMenuConditionScanResults.length != 0) {
-              npModernPopupMenuCondition = npModernPopupMenuConditionScanResults[0].address.add(8);
+              npModernPopupMenuCondition = npModernPopupMenuConditionScanResults[0].address.add(2);
             } else {
               console.log("Could not locate the npModernPopupMenuCondition. Aborting...");
               return;
             }
 
             global.enableContextMenu = () => {
-              npModernPopupMenuCondition.writeU8(0x00);
+              var addr = npModernPopupMenuCondition.readPointer();
+              var flags = addr.readU32();
+              addr.writeU32(flags | 0x4);
             };
 
             global.disableContextMenu = () => {
-              npModernPopupMenuCondition.writeU8(0xb6);
+              var addr = npModernPopupMenuCondition.readPointer();
+              var flags = addr.readU32();
+              addr.writeU32(flags & (~0x4));
             };
 
             // Amalgamated
