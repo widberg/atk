@@ -992,6 +992,20 @@ const games = {
             //   0xe8, 0xeb, 0x02, 0x33, 0xed, 0x53, 0x8b, 0x5c, 0x24, 0x28,
             //   0x53, 0xe8, 0xfe, 0x7d
             // };
+
+            // random menu thing
+
+            var npModernPopupMenuCondition = new NativePointer('0x005D5C94');
+
+            global.enableContextMenu = () => {
+              flags = npModernPopupMenuCondition.readU32();
+              npModernPopupMenuCondition.writeU32(flags | 0x04);
+            };
+
+            global.disableContextMenu = () => {
+              flags = npModernPopupMenuCondition.readU32();
+              npModernPopupMenuCondition.writeU32(flags & (~0x04));
+            };
           } else {
             // rat
             var isRU = false; // russian version
