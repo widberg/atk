@@ -126,7 +126,7 @@ Stop logging commands to the console as they run.
 
 #### enableContextMenu()
 
-Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Enable the right-click menu present in later games.
+Sitting Ducks, Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Enable the right-click menu present in later games.
 
 ```sh
 [Local::overlay.exe]-> enableContextMenu()
@@ -134,7 +134,7 @@ Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: 
 
 #### disableContextMenu()
 
-Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Disable the right-click menu present in later games.
+Sitting Ducks, Ratatouille, Garfield: A Tail of Two Kitties/Garfield 2, and CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike only! Disable the right-click menu present in later games.
 
 ```sh
 [Local::overlay.exe]-> disableContextMenu()
