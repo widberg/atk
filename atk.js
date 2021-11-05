@@ -203,10 +203,10 @@ const n = {
       if (0 == (p = Memory.scanSync(n.base, n.size, f)).length) return void console.log("Could not locate the npModernPopupMenuCondition. Aborting...");
       s = p[0].address.add(2), global.enableContextMenu = () => {
         var e = s.readPointer(), o = e.readU32();
-        e.writeU32(4 | o);
+        e.writeU32(-2 & (4 | o));
       }, global.disableContextMenu = () => {
         var e = s.readPointer(), o = e.readU32();
-        e.writeU32(-5 & o);
+        e.writeU32(-5 & o | 1);
       };
     } else {
       var m, g = !1;

@@ -1008,13 +1008,13 @@ const games = {
             global.enableContextMenu = () => {
               var addr = npModernPopupMenuCondition.readPointer();
               var flags = addr.readU32();
-              addr.writeU32(flags | 0x4);
+              addr.writeU32((flags | 0x4) & (~0x1));
             };
 
             global.disableContextMenu = () => {
               var addr = npModernPopupMenuCondition.readPointer();
               var flags = addr.readU32();
-              addr.writeU32(flags & (~0x4));
+              addr.writeU32((flags & (~0x4)) | 0x1);
             };
 
             // Amalgamated
