@@ -99,6 +99,15 @@ Print the array of command names that have been registered while the game was in
 [Local::FUEL.exe]-> dumpCommandNames()
 ```
 
+#### dumpCommandNamesPretty()
+
+Print the array of command names that have been registered while the game was instrumented with newlines. If the game was instrumented after launch then this will probably be empty because one of the first things to happen is command registration.
+
+```sh
+[Local::FUEL.exe]-> dumpCommandNamesPretty()
+```
+
+
 #### enableLogCommands()
 
 Log commands to the console as they run.

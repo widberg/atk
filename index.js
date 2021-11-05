@@ -145,6 +145,7 @@ const games = {
     });
 
     global.dumpCommandNames = () => { console.log(commandNames); };
+    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // 0x0069a400 EN
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -330,6 +331,7 @@ const games = {
     });
 
     global.dumpCommandNames = () => { console.log(commandNames); };
+    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // 0xXXXXXXXXX Scene
     //
 
@@ -423,6 +425,7 @@ const games = {
       });
 
       global.dumpCommandNames = () => { console.log(commandNames); };
+      global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
       // 0x0052e520 US EU RU
       // #define _BUFFER_SIZE 64
       // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -504,6 +507,7 @@ const games = {
         });
   
         global.dumpCommandNames = () => { console.log(commandNames); };
+        global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
         // 0x0054B1C0
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -704,6 +708,7 @@ const games = {
             }
           });
           global.dumpCommandNames = () => { console.log(commandNames); };
+          global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
           // Aggregate
           // #define _BUFFER_SIZE 64
           // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -939,6 +944,7 @@ const games = {
               }
             });
             global.dumpCommandNames = () => { console.log(commandNames); };
+            global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
             // Aggregate
             // #define _BUFFER_SIZE 64
             // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1251,6 +1257,7 @@ const games = {
             });
 
             global.dumpCommandNames = () => { console.log(commandNames); };
+            global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
             // Aggregate
             // #define _BUFFER_SIZE 64
             // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1567,6 +1574,7 @@ const games = {
     });
 
     global.dumpCommandNames = () => { console.log(commandNames); };
+    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // 0x0041bec0 US
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1726,6 +1734,7 @@ const games = {
       }
     });
     global.dumpCommandNames = () => { console.log(commandNames); };
+    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // Aggregate
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
