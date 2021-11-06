@@ -339,6 +339,40 @@ const n = {
       console.log(e.join("\n"));
     };
   },
+  launch: () => {
+    const n = Process.enumerateModules()[0];
+    for (const e of Process.enumerateModules()) Memory.protect(e.base, e.size, "rwx");
+    var a, t = Memory.scanSync(n.base, n.size, "8b 0d 60 d2 67 00 68 84 90 63 00 e8 7c 06 00 00 e8 c7 5b 0a 00 8b 0d 74 d2 67 00 8b 01 8b 50 4c ff d2 80 3d b4 43 68 00 00 75 f7 a1 74 d2 67 00 8b 0d 68 d2 67 00 83 c0 24 50 e8 ad 79 0a 00 85");
+    if (0 != t.length) {
+      var r;
+      a = t[0].address.add(2).readPointer();
+      var c = Memory.scanSync(n.base, n.size, "81 ec 8c 08 00 00 a1 64 ea 67 00 33 c4 89 84 24 88 08 00 00 53 8b 9c 24 94 08 00 00 57 8b f9 89 5c 24 0c c6 44 24 10 00 8d 84 24 90 00 00 00 b9 0f 00 00 00 c6 00 00 05 80 00 00 00 83 e9 01 79");
+      if (0 != c.length) {
+        var l;
+        r = new NativeFunction(c[0].address, "bool", [ "pointer", "pointer" ], "thiscall"), 
+        Interceptor.attach(r, {
+          onEnter: e => {
+            o && (this.command_line = e[0].readAnsiString());
+          },
+          onLeave: e => {
+            o && console.log('"' + this.command_line + '" ' + (255 & e.toInt32()));
+          }
+        }), global.runCommand = e => {
+          r(a.readPointer(), Memory.allocUtf8String(e));
+        };
+        var d = Memory.scanSync(n.base, n.size, "51 53 55 56 57 8b d9 68 dc 00 00 00 89 5c 24 14 e8 2b 0b 0c 00 33 f6 83 c4 04 3b c6 74 24 c6 00 00 c6 40 40 00 c6 80 c0 00 00 00 00 89 b0 d4 00 00 00 89 b0 d8 00 00 00 89 b0 d0 00 00 00 8b e8");
+        0 != d.length ? (l = d[0].address, Interceptor.attach(l, {
+          onEnter: o => {
+            e.push(o[0].readAnsiString());
+          }
+        }), global.dumpCommandNames = () => {
+          console.log(e);
+        }, global.dumpCommandNamesPretty = () => {
+          console.log(e.join("\n"));
+        }) : console.log("Could not locate the npRegisterCommand. Aborting...");
+      } else console.log("Could not locate the nfRunCommand. Aborting...");
+    } else console.log("Could not locate the nppGlobalCommandState. Aborting...");
+  },
   aplaguetaleinnocence_x64: () => {
     const n = Process.enumerateModules()[0];
     for (const e of Process.enumerateModules()) Memory.protect(e.base, e.size, "rwx");
