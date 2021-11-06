@@ -34,7 +34,7 @@ const n = {
     }
     if (Interceptor.attach(d, {
       onEnter: o => {
-        e.push(this.context.r7.readAnsiString());
+        e.push(this.context.edi.readAnsiString());
       }
     }), global.dumpCommandNames = () => {
       console.log(e);
@@ -313,7 +313,7 @@ const n = {
         r = new NativeFunction(d[0].address, "bool", [ "pointer", "pointer", "int64" ], "win64"), 
         Interceptor.attach(r, {
           onEnter: e => {
-            o && (this.command_line = this.context.r2.readAnsiString());
+            o && (this.command_line = this.context.rdx.readAnsiString());
           },
           onLeave: e => {
             o && console.log('"' + this.command_line + '" ' + (255 & e.toInt32()));
@@ -324,7 +324,7 @@ const n = {
         var s = Memory.scanSync(n.base, n.size, "48 89 5c 24 18 55 56 57 41 54 41 55 41 56 41 57 48 83 ec 40 4d 8b e0 48 8b ea 48 8b f9 48 85 d2 74 16 4c 8b 05 ?? ?? df 00 48 8d 8c 24 80 00 00 00 e8 ?? ?? f2 ff eb 17 48 8b 05 ?? ?? df 00 48");
         0 != s.length ? (i = s[0].address, Interceptor.attach(i, {
           onEnter: o => {
-            e.push(this.context.r2.readAnsiString());
+            e.push(this.context.rdx.readAnsiString());
           }
         }), global.dumpCommandNames = () => {
           console.log(e);

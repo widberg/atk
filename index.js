@@ -140,7 +140,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(this.context.r7.readAnsiString());
+        commandNames.push(this.context.edi.readAnsiString());
       }
     });
 
@@ -1803,7 +1803,7 @@ const games = {
     Interceptor.attach(nfRunCommand, {
       onEnter: args => {
         if (logCommands) {
-          this.command_line = this.context.r2.readAnsiString();
+          this.command_line = this.context.rdx.readAnsiString();
         }
       },
       onLeave: (retval) => {
@@ -1862,7 +1862,7 @@ const games = {
 
     Interceptor.attach(npRegisterCommand, {
       onEnter: args => {
-        commandNames.push(this.context.r2.readAnsiString());
+        commandNames.push(this.context.rdx.readAnsiString());
       }
     });
     global.dumpCommandNames = () => { console.log(commandNames); };
