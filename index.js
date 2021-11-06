@@ -1992,6 +1992,104 @@ const games = {
     // };
   },
 
+  "ugly": () => {
+    const csrModule = Process.enumerateModules()[0];
+
+    for (const module of Process.enumerateModules()) {
+      Memory.protect(module.base, module.size, "rwx");
+    }
+ 
+    var nppGlobalCommandState;
+    var nppGlobalCommandStatePattern = "8b 0d c8 d8 64 00 68 40 1a 62 00 e8 3e 89 fb ff 8b 0d dc d8 64 00 8b 11 ff 52 40 8d 49 00 a0 28 46 65 00 84 c0 75 f7 a1 dc d8 64 00 8b 0d d0 d8 64 00 83 c0 20 50 e8 23 37 fb ff 85 c0 74 1c 8b";
+    var nppGlobalCommandStateScanResults = Memory.scanSync(csrModule.base, csrModule.size, nppGlobalCommandStatePattern);
+    if (nppGlobalCommandStateScanResults.length != 0) {
+      nppGlobalCommandState = nppGlobalCommandStateScanResults[0].address.add(2).readPointer();
+    } else {
+      console.log("Could not locate the nppGlobalCommandState. Aborting...");
+      return;
+    }
+    
+    // 0x0064D8C8 RU
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x8b, 0x0d, 0xc8, 0xd8, 0x64, 0x00, 0x68, 0x40, 0x1a, 0x62,
+    //   0x00, 0xe8, 0x3e, 0x89, 0xfb, 0xff, 0x8b, 0x0d, 0xdc, 0xd8,
+    //   0x64, 0x00, 0x8b, 0x11, 0xff, 0x52, 0x40, 0x8d, 0x49, 0x00,
+    //   0xa0, 0x28, 0x46, 0x65, 0x00, 0x84, 0xc0, 0x75, 0xf7, 0xa1,
+    //   0xdc, 0xd8, 0x64, 0x00, 0x8b, 0x0d, 0xd0, 0xd8, 0x64, 0x00,
+    //   0x83, 0xc0, 0x20, 0x50, 0xe8, 0x23, 0x37, 0xfb, 0xff, 0x85,
+    //   0xc0, 0x74, 0x1c, 0x8b
+    // };
+ 
+    var nfRunCommand;
+    var nfRunCommandPattern = "81 ec 88 08 00 00 a1 18 25 65 00 53 8b 9c 24 90 08 00 00 89 84 24 88 08 00 00 8b c3 57 8b f9 8d 50 01 8a 08 40 84 c9 75 f9 2b c2 89 44 24 08 75 19 5f 32 c0 5b 8b 8c 24 84 08 00 00 e8 b2 ba 0c";
+    var nfRunCommandScanResults = Memory.scanSync(csrModule.base, csrModule.size, nfRunCommandPattern);
+    if (nfRunCommandScanResults.length != 0) {
+      nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer"], 'thiscall');
+    } else {
+      console.log("Could not locate the nfRunCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(nfRunCommand, {
+      onEnter: args => {
+        if (logCommands) {
+          this.command_line = args[0].readAnsiString();
+        }
+      },
+      onLeave: (retval) => {
+        if (logCommands) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
+        }
+      }
+    });
+
+    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
+            
+    // 0x005146E0 RU
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x81, 0xec, 0x88, 0x08, 0x00, 0x00, 0xa1, 0x18, 0x25, 0x65,
+    //   0x00, 0x53, 0x8b, 0x9c, 0x24, 0x90, 0x08, 0x00, 0x00, 0x89,
+    //   0x84, 0x24, 0x88, 0x08, 0x00, 0x00, 0x8b, 0xc3, 0x57, 0x8b,
+    //   0xf9, 0x8d, 0x50, 0x01, 0x8a, 0x08, 0x40, 0x84, 0xc9, 0x75,
+    //   0xf9, 0x2b, 0xc2, 0x89, 0x44, 0x24, 0x08, 0x75, 0x19, 0x5f,
+    //   0x32, 0xc0, 0x5b, 0x8b, 0x8c, 0x24, 0x84, 0x08, 0x00, 0x00,
+    //   0xe8, 0xb2, 0xba, 0x0c
+    // };
+ 
+    var npRegisterCommand;
+    var npRegisterCommandPattern = "51 53 55 56 57 8b d9 68 dc 00 00 00 89 5c 24 14 e8 25 bc 0c 00 33 f6 83 c4 04 3b c6 74 16 89 b0 d4 00 00 00 89 b0 d8 00 00 00 89 b0 d0 00 00 00 8b e8 eb 02 33 ed 8b 7c 24 18 8b d7 8b c5 2b d5";
+    var npRegisterCommandScanResults = Memory.scanSync(csrModule.base, csrModule.size, npRegisterCommandPattern);
+    if (npRegisterCommandScanResults.length != 0) {
+      npRegisterCommand = npRegisterCommandScanResults[0].address;
+    } else {
+      console.log("Could not locate the npRegisterCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(npRegisterCommand, {
+      onEnter: args => {
+        commandNames.push(args[0].readAnsiString());
+      }
+    });
+
+    global.dumpCommandNames = () => { console.log(commandNames); };
+    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+
+    // 0x00514310 RU
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x51, 0x53, 0x55, 0x56, 0x57, 0x8b, 0xd9, 0x68, 0xdc, 0x00,
+    //   0x00, 0x00, 0x89, 0x5c, 0x24, 0x14, 0xe8, 0x25, 0xbc, 0x0c,
+    //   0x00, 0x33, 0xf6, 0x83, 0xc4, 0x04, 0x3b, 0xc6, 0x74, 0x16,
+    //   0x89, 0xb0, 0xd4, 0x00, 0x00, 0x00, 0x89, 0xb0, 0xd8, 0x00,
+    //   0x00, 0x00, 0x89, 0xb0, 0xd0, 0x00, 0x00, 0x00, 0x8b, 0xe8,
+    //   0xeb, 0x02, 0x33, 0xed, 0x8b, 0x7c, 0x24, 0x18, 0x8b, 0xd7,
+    //   0x8b, 0xc5, 0x2b, 0xd5
+    // };
+  },
+
   ////////////
   // APlagueTaleInnocence_x64 //
   ////////////
