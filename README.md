@@ -6,6 +6,8 @@ Asobo Toolkit
 
 ## Supported Games
 
+Asobo Studio Games
+
 * Sitting Ducks (EU,PL,RU)
 * The Mummy: The Animated Series (PL,RU)
 * CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike (Steam)
@@ -15,6 +17,12 @@ Asobo Toolkit
 * FUEL (US,RU,Steam,Steam Demo)
 * Up (US,RU)
 * A Plague Tale: Innocence (EGS,Steam)
+
+Black Sheep Studio Games
+
+* Championsheep Rally
+* The Ugly Duckling and Me
+* The Magic Roundabout
 
 ## Documentation
 
