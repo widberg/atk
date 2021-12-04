@@ -13,7 +13,7 @@ Asobo Studio Games
 * CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike (Steam)
 * Garfield: A Tail of Two Kitties/Garfield 2 (US,EU,RU)
 * Ratatouille (US,RU,DE,ES,PT,FR,NL,Scandinavia,PL,BR,Action Pack)
-* WALL-E (US,Steam US,RU,DE)
+* WALL-E (US,Steam US,RU,DE,UK)
 * FUEL (US,RU,Steam,Steam Demo)
 * Up (US,RU)
 * A Plague Tale: Innocence (EGS,Steam)
