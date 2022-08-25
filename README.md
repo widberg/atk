@@ -137,7 +137,7 @@ Stop logging commands to the console as they run.
 Add the command prefix string to the list of commands excluded from logging (case insensitive).
 
 ```sh
-[Local::FUEL.exe]-> addExcludedCommand()
+[Local::FUEL.exe]-> addExcludedCommand("menu")
 ```
 
 #### removeExcludedCommand(\<cmd : string\>)
@@ -145,7 +145,7 @@ Add the command prefix string to the list of commands excluded from logging (cas
 Remove the command prefix string from the list of commands excluded from logging (case insensitive).
 
 ```sh
-[Local::FUEL.exe]-> removeExcludedCommand()
+[Local::FUEL.exe]-> removeExcludedCommand("menu")
 ```
 
 #### clearExcludedCommands()
