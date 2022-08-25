@@ -132,6 +132,30 @@ Stop logging commands to the console as they run.
 [Local::FUEL.exe]-> disableLogCommands()
 ```
 
+#### addExcludedCommand(\<cmd : string\>)
+
+Add the command prefix string to the list of commands excluded from logging (case insensitive).
+
+```sh
+[Local::FUEL.exe]-> addExcludedCommand()
+```
+
+#### removeExcludedCommand(\<cmd : string\>)
+
+Remove the command prefix string from the list of commands excluded from logging (case insensitive).
+
+```sh
+[Local::FUEL.exe]-> removeExcludedCommand()
+```
+
+#### clearExcludedCommands()
+
+Clear the list of commands excluded from logging.
+
+```sh
+[Local::FUEL.exe]-> clearExcludedCommands()
+```
+
 #### enableContextMenu()
 
 Sitting Ducks, The Mummy: The Animated Series, CT Special Forces: Fire for Effect/Special Forces: Nemesis Strik, Garfield: A Tail of Two Kitties/Garfield 2, and Ratatouille only! Enable the right-click menu present in later games.
