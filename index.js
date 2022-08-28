@@ -1,4 +1,5 @@
 var commandNames = [];
+var excludedCommands = [];
 var logCommands = false;
 
 const games = {
@@ -83,7 +84,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -278,7 +279,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -397,7 +398,7 @@ const games = {
           }
         },
         onLeave: (retval) => {
-          if (logCommands) {
+          if (logCommands && checkNotExcluded(this.command_line)) {
             console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
           }
         }
@@ -479,7 +480,7 @@ const games = {
             }
           },
           onLeave: (retval) => {
-            if (logCommands) {
+            if (logCommands && checkNotExcluded(this.command_line)) {
               console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
             }
           }
@@ -649,7 +650,7 @@ const games = {
               }
             },
             onLeave: (retval) => {
-              if (logCommands) {
+              if (logCommands && checkNotExcluded(this.command_line)) {
                 console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
               }
             }
@@ -933,7 +934,7 @@ const games = {
                 }
               },
               onLeave: (retval) => {
-                if (logCommands) {
+                if (logCommands && checkNotExcluded(this.command_line)) {
                   console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
                 }
               }
@@ -1263,7 +1264,7 @@ const games = {
                 }
               },
               onLeave: (retval) => {
-                if (logCommands) {
+                if (logCommands && checkNotExcluded(this.command_line)) {
                   console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
                 }
               }
@@ -1666,7 +1667,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -1800,7 +1801,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -1939,7 +1940,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -2038,7 +2039,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -2165,7 +2166,7 @@ const games = {
         }
       },
       onLeave: (retval) => {
-        if (logCommands) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
       }
@@ -2297,6 +2298,16 @@ const games = {
 
 var gameSetup = games[Process.enumerateModules()[0].name.toLowerCase().split('.')[0]];
 
+function checkNotExcluded(command) {
+  command = command.toLowerCase();
+  for (const excludedCommand of excludedCommands) {
+    if (command.startsWith(excludedCommand)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 if (gameSetup) {
   gameSetup();
 
@@ -2307,6 +2318,19 @@ if (gameSetup) {
   global.disableLogCommands = () => {
     logCommands = false;
   };
+
+  global.addExcludedCommand = command  => {
+    excludedCommands.push(command.toLowerCase());
+  };
+
+  global.removeExcludedCommand = command => {
+    command = command.toLowerCase();
+    excludedCommands = excludedCommands.filter(item => item !== command);
+  }
+
+  global.clearExcludedCommands = () => {
+    excludedCommands = [];
+  }
 } else {
   console.log("Unknown executable name. Unable to instrument.");
 }
