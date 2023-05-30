@@ -60,7 +60,7 @@ Double check that you are running Frida from the correct directory. Ideally you 
 #### Option 1) Instrument an already running game (Recommended)
 
 ```sh
-frida -n FUEL.exe -l atk.js --no-pause
+frida -n FUEL.exe -l atk.js
 ```
 
 #### Option 2) Launch the game with instrumentation
@@ -70,13 +70,13 @@ This option will not work on all games. You may have to circumvent DRM/Anti-debu
 If this option doesn't work, try again but use the full path to the executable. Ex: `-f "D:\SteamLibrary\steamapps\common\FUEL\FUEL.exe"`.
 
 ```sh
-frida -f FUEL.exe -l atk.js -o atk.log --no-pause
+frida -f FUEL.exe -l atk.js -o atk.log
 ```
 
 To pass arguments to the game EXE on launch. Ex: `-W`
 
 ```sh
-frida -f FUEL.exe -l atk.js -o atk.log --no-pause -- -W
+frida -f FUEL.exe -l atk.js -o atk.log -- -W
 ```
 
 ### REPL
