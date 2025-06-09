@@ -4,6 +4,8 @@ Asobo Toolkit
 
 <sup>This repository is a relative of the main [FMTK repository](https://github.com/widberg/fmtk).</sup>
 
+Also supports Black Sheep Studio games so this should really be called ZTK, Zouna Toolkit.
+
 ## Supported Games
 
 Asobo Studio Games
@@ -35,7 +37,7 @@ The documentation for commands is located on the [atk wiki](https://github.com/w
 Run the commands below the list to install everything.
 
 * [Python](https://www.python.org/) 3.x
-* [Frida](https://github.com/frida/frida)
+* [Frida](https://github.com/frida/frida) - Tested with 17.x
 * [atk.js](https://raw.githubusercontent.com/widberg/atk/master/atk.js)
 
 Using [winget](https://github.com/microsoft/winget-cli) or manual installation
@@ -67,7 +69,7 @@ frida -n FUEL.exe -l atk.js
 
 This option will not work on all games. You may have to circumvent DRM/Anti-debug to launch the game directly.
 
-If this option doesn't work, try again but use the full path to the executable. Ex: `-f "D:\SteamLibrary\steamapps\common\FUEL\FUEL.exe"`.
+If this option doesn't work, try again but use the absolute path to the executable. Ex: `-f "D:\SteamLibrary\steamapps\common\FUEL\FUEL.exe"`.
 
 ```sh
 frida -f FUEL.exe -l atk.js -o atk.log
@@ -158,7 +160,7 @@ Clear the list of commands excluded from logging.
 
 #### enableContextMenu()
 
-Sitting Ducks, The Mummy: The Animated Series, CT Special Forces: Fire for Effect/Special Forces: Nemesis Strik, Garfield: A Tail of Two Kitties/Garfield 2, and Ratatouille only! Enable the right-click menu present in later games.
+Sitting Ducks, The Mummy: The Animated Series, CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike, Garfield: A Tail of Two Kitties/Garfield 2, and Ratatouille only! Enable the right-click menu present in later games.
 
 ```sh
 [Local::overlay.exe]-> enableContextMenu()
@@ -166,7 +168,7 @@ Sitting Ducks, The Mummy: The Animated Series, CT Special Forces: Fire for Effec
 
 #### disableContextMenu()
 
-Sitting Ducks, The Mummy: The Animated Series, CT Special Forces: Fire for Effect/Special Forces: Nemesis Strik, Garfield: A Tail of Two Kitties/Garfield 2, and Ratatouille only! Disable the right-click menu present in later games.
+Sitting Ducks, The Mummy: The Animated Series, CT Special Forces: Fire for Effect/Special Forces: Nemesis Strike, Garfield: A Tail of Two Kitties/Garfield 2, and Ratatouille only! Disable the right-click menu present in later games.
 
 ```sh
 [Local::overlay.exe]-> disableContextMenu()
