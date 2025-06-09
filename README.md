@@ -194,6 +194,4 @@ WALL-E only! Disable the DPad cheats.
 
 [Frida JavaScript API](https://frida.re/docs/javascript-api/)
 
-Edit the `index.js` file then run `npm run-script build` to generate a new minified `atk.js` script.
-
 Pull requests are welcome.
