@@ -90,7 +90,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x0069a590 EN
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -145,8 +145,8 @@ const games = {
       }
     });
 
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // 0x0069a400 EN
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -285,7 +285,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x00476580 Scene
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -331,8 +331,8 @@ const games = {
       }
     });
 
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // 0xXXXXXXXXX Scene
     //
 
@@ -361,11 +361,11 @@ const games = {
       return;
     }
 
-    global.enableDPadCheats = () => {
+    globalThis.enableDPadCheats = () => {
       npDPadCheats.writeU8(0x43);
     };
 
-    global.disableDPadCheats = () => {
+    globalThis.disableDPadCheats = () => {
       npDPadCheats.writeU8(0x63);
     };
   },
@@ -404,7 +404,7 @@ const games = {
         }
       });
 
-      global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+      globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
       // 0x0052e8b0 US EU RU
       // #define _BUFFER_SIZE 64
       // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -425,8 +425,8 @@ const games = {
         }
       });
 
-      global.dumpCommandNames = () => { console.log(commandNames); };
-      global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+      globalThis.dumpCommandNames = () => { console.log(commandNames); };
+      globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
       // 0x0052e520 US EU RU
       // #define _BUFFER_SIZE 64
       // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -443,11 +443,11 @@ const games = {
 
       var npModernPopupMenuCondition = new NativePointer('0x005EBAED').add(1);
 
-      global.enableContextMenu = () => {
+      globalThis.enableContextMenu = () => {
         npModernPopupMenuCondition.writeU8(0x00);
       };
 
-      global.disableContextMenu = () => {
+      globalThis.disableContextMenu = () => {
         npModernPopupMenuCondition.writeU8(0x56);
       };
 
@@ -486,7 +486,7 @@ const games = {
           }
         });
   
-        global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+        globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
         // 0x0054B420
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -507,8 +507,8 @@ const games = {
           }
         });
   
-        global.dumpCommandNames = () => { console.log(commandNames); };
-        global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+        globalThis.dumpCommandNames = () => { console.log(commandNames); };
+        globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
         // 0x0054B1C0
         // #define _BUFFER_SIZE 64
         // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -525,11 +525,11 @@ const games = {
 
       var npModernPopupMenuCondition = new NativePointer('0x0060AE7D').add(1);
 
-      global.enableContextMenu = () => {
+      globalThis.enableContextMenu = () => {
         npModernPopupMenuCondition.writeU8(0x00);
       };
 
-      global.disableContextMenu = () => {
+      globalThis.disableContextMenu = () => {
         npModernPopupMenuCondition.writeU8(0x56);
       };
 
@@ -656,7 +656,7 @@ const games = {
             }
           });
 
-          global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+          globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
           // Aggregate
           // #define _BUFFER_SIZE 64
           // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -708,8 +708,8 @@ const games = {
               commandNames.push(args[0].readAnsiString());
             }
           });
-          global.dumpCommandNames = () => { console.log(commandNames); };
-          global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+          globalThis.dumpCommandNames = () => { console.log(commandNames); };
+          globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
           // Aggregate
           // #define _BUFFER_SIZE 64
           // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -758,13 +758,13 @@ const games = {
               return;
             }
 
-            global.enableContextMenu = () => {
+            globalThis.enableContextMenu = () => {
               var addr = npModernPopupMenuCondition.readPointer();
               var flags = addr.readU32();
               addr.writeU32((flags | 0x4) & (~0x1));
             };
 
-            global.disableContextMenu = () => {
+            globalThis.disableContextMenu = () => {
               var addr = npModernPopupMenuCondition.readPointer();
               var flags = addr.readU32();
               addr.writeU32((flags & (~0x4)) | 0x1);
@@ -940,7 +940,7 @@ const games = {
               }
             });
             
-            global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+            globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
             // Aggregate
             // #define _BUFFER_SIZE 64
             // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1004,8 +1004,8 @@ const games = {
                 commandNames.push(args[0].readAnsiString());
               }
             });
-            global.dumpCommandNames = () => { console.log(commandNames); };
-            global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+            globalThis.dumpCommandNames = () => { console.log(commandNames); };
+            globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
             // Aggregate
             // #define _BUFFER_SIZE 64
             // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1066,13 +1066,13 @@ const games = {
               return;
             }
 
-            global.enableContextMenu = () => {
+            globalThis.enableContextMenu = () => {
               var addr = npModernPopupMenuCondition.readPointer();
               var flags = addr.readU32();
               addr.writeU32((flags | 0x4) & (~0x1));
             };
 
-            global.disableContextMenu = () => {
+            globalThis.disableContextMenu = () => {
               var addr = npModernPopupMenuCondition.readPointer();
               var flags = addr.readU32();
               addr.writeU32((flags & (~0x4)) | 0x1);
@@ -1270,7 +1270,7 @@ const games = {
               }
             });
 
-            global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+            globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
             // Aggregate
             // #define _BUFFER_SIZE 64
             // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1389,8 +1389,8 @@ const games = {
               }
             });
 
-            global.dumpCommandNames = () => { console.log(commandNames); };
-            global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+            globalThis.dumpCommandNames = () => { console.log(commandNames); };
+            globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
             // Aggregate
             // #define _BUFFER_SIZE 64
             // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1505,11 +1505,11 @@ const games = {
               return;
             }
 
-            global.enableContextMenu = () => {
+            globalThis.enableContextMenu = () => {
               npModernPopupMenuCondition.writeU8(0x00);
             };
 
-            global.disableContextMenu = () => {
+            globalThis.disableContextMenu = () => {
               if (isRU) {
                 npModernPopupMenuCondition.writeU8(0x54);
               } else {
@@ -1673,7 +1673,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // 0x0041c080 US
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1706,8 +1706,8 @@ const games = {
       }
     });
 
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // 0x0041bec0 US
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -1807,7 +1807,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
             
     // Aggregate
     // #define _BUFFER_SIZE 64
@@ -1864,8 +1864,8 @@ const games = {
       }
     });
 
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
 
     // 0x004A0230 EU
     // #define _BUFFER_SIZE 64
@@ -1946,7 +1946,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
             
     // 0x004EFED0 EU
     // #define _BUFFER_SIZE 64
@@ -1977,8 +1977,8 @@ const games = {
       }
     });
 
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
 
     // 0x004EFD80 EU
     // #define _BUFFER_SIZE 64
@@ -2045,7 +2045,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
             
     // 0x005146E0 RU
     // #define _BUFFER_SIZE 64
@@ -2075,8 +2075,8 @@ const games = {
       }
     });
 
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
 
     // 0x00514310 RU
     // #define _BUFFER_SIZE 64
@@ -2172,7 +2172,7 @@ const games = {
       }
     });
 
-    global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     // Aggregate
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -2224,8 +2224,8 @@ const games = {
         commandNames.push(this.context.rdx.readAnsiString());
       }
     });
-    global.dumpCommandNames = () => { console.log(commandNames); };
-    global.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
     // Aggregate
     // #define _BUFFER_SIZE 64
     // const uint8_t buffer[_BUFFER_SIZE] = {
@@ -2280,7 +2280,7 @@ const games = {
 
   //   var nfRunCommand = new NativeFunction(new NativePointer(''), "bool", ["pointer", "pointer", "uint32"], 'win64');
 
-  //   global.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+  //   globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
     
 
 
@@ -2292,7 +2292,7 @@ const games = {
   //     }
   //   });
 
-  //   global.dumpCommandNames = () => { console.log(commandNames); };
+  //   globalThis.dumpCommandNames = () => { console.log(commandNames); };
   // }
 };
 
@@ -2311,24 +2311,24 @@ function checkNotExcluded(command) {
 if (gameSetup) {
   gameSetup();
 
-  global.enableLogCommands = () => {
+  globalThis.enableLogCommands = () => {
     logCommands = true;
   };
 
-  global.disableLogCommands = () => {
+  globalThis.disableLogCommands = () => {
     logCommands = false;
   };
 
-  global.addExcludedCommand = command  => {
+  globalThis.addExcludedCommand = command  => {
     excludedCommands.push(command.toLowerCase());
   };
 
-  global.removeExcludedCommand = command => {
+  globalThis.removeExcludedCommand = command => {
     command = command.toLowerCase();
     excludedCommands = excludedCommands.filter(item => item !== command);
   }
 
-  global.clearExcludedCommands = () => {
+  globalThis.clearExcludedCommands = () => {
     excludedCommands = [];
   }
 } else {
