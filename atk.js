@@ -78,12 +78,12 @@ const games = {
     }
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = args[1].readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -140,7 +140,7 @@ const games = {
     }
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(this.context.edi.readAnsiString());
       }
     });
@@ -273,12 +273,12 @@ const games = {
     var nfRunCommand = new NativeFunction(walleModule.base.add(0x00476580).sub(0x00400000), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = args[0].readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -326,7 +326,7 @@ const games = {
     var npRegisterCommand = walleModule.base.add(0x004763b0).sub(0x00400000);
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(args[0].readAnsiString());
       }
     });
@@ -392,12 +392,12 @@ const games = {
       var nfRunCommand = new NativeFunction(new NativePointer('0x0052e8b0'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
       Interceptor.attach(nfRunCommand, {
-        onEnter: args => {
+        onEnter: function(args) {
           if (logCommands) {
             this.command_line = args[0].readAnsiString();
           }
         },
-        onLeave: (retval) => {
+        onLeave: function(retval) {
           if (logCommands && checkNotExcluded(this.command_line)) {
             console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
           }
@@ -420,7 +420,7 @@ const games = {
       var npRegisterCommand = new NativePointer('0x0052e520');
 
       Interceptor.attach(npRegisterCommand, {
-        onEnter: args => {
+        onEnter: function(args) {
           commandNames.push(args[0].readAnsiString());
         }
       });
@@ -474,12 +474,12 @@ const games = {
         var nfRunCommand = new NativeFunction(new NativePointer('0x0054B420'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
         Interceptor.attach(nfRunCommand, {
-          onEnter: args => {
+          onEnter: function(args) {
             if (logCommands) {
               this.command_line = args[0].readAnsiString();
             }
           },
-          onLeave: (retval) => {
+          onLeave: function(retval) {
             if (logCommands && checkNotExcluded(this.command_line)) {
               console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
             }
@@ -502,7 +502,7 @@ const games = {
         var npRegisterCommand = new NativePointer('0x0054B1C0');
   
         Interceptor.attach(npRegisterCommand, {
-          onEnter: args => {
+          onEnter: function(args) {
             commandNames.push(args[0].readAnsiString());
           }
         });
@@ -644,12 +644,12 @@ const games = {
           }
 
           Interceptor.attach(nfRunCommand, {
-            onEnter: args => {
+            onEnter: function(args) {
               if (logCommands) {
                 this.command_line = args[0].readAnsiString();
               }
             },
-            onLeave: (retval) => {
+            onLeave: function(retval) {
               if (logCommands && checkNotExcluded(this.command_line)) {
                 console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
               }
@@ -704,7 +704,7 @@ const games = {
           }
 
           Interceptor.attach(npRegisterCommand, {
-            onEnter: args => {
+            onEnter: function(args) {
               commandNames.push(args[0].readAnsiString());
             }
           });
@@ -928,12 +928,12 @@ const games = {
             }
 
             Interceptor.attach(nfRunCommand, {
-              onEnter: args => {
+              onEnter: function(args) {
                 if (logCommands) {
                   this.command_line = args[0].readAnsiString();
                 }
               },
-              onLeave: (retval) => {
+              onLeave: function(retval) {
                 if (logCommands && checkNotExcluded(this.command_line)) {
                   console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
                 }
@@ -1000,7 +1000,7 @@ const games = {
             }
 
             Interceptor.attach(npRegisterCommand, {
-              onEnter: args => {
+              onEnter: function(args) {
                 commandNames.push(args[0].readAnsiString());
               }
             });
@@ -1258,12 +1258,12 @@ const games = {
             }
 
             Interceptor.attach(nfRunCommand, {
-              onEnter: args => {
+              onEnter: function(args) {
                 if (logCommands) {
                   this.command_line = args[0].readAnsiString();
                 }
               },
-              onLeave: (retval) => {
+              onLeave: function(retval) {
                 if (logCommands && checkNotExcluded(this.command_line)) {
                   console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
                 }
@@ -1384,7 +1384,7 @@ const games = {
             }
 
             Interceptor.attach(npRegisterCommand, {
-              onEnter: args => {
+              onEnter: function(args) {
                 commandNames.push(args[0].readAnsiString());
               }
             });
@@ -1661,12 +1661,12 @@ const games = {
     var nfRunCommand = new NativeFunction(new NativePointer('0x0041c080'), "bool", ["pointer", "pointer", "uint32"], 'thiscall');
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = args[0].readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -1701,7 +1701,7 @@ const games = {
     var npRegisterCommand = new NativePointer('0x0041bec0');
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(args[0].readAnsiString());
       }
     });
@@ -1795,12 +1795,12 @@ const games = {
     }
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = args[0].readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -1859,7 +1859,7 @@ const games = {
     }
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(args[0].readAnsiString());
       }
     });
@@ -1934,12 +1934,12 @@ const games = {
     }
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = args[0].readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -1972,7 +1972,7 @@ const games = {
     }
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(args[0].readAnsiString());
       }
     });
@@ -2033,12 +2033,12 @@ const games = {
     }
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = args[0].readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -2070,7 +2070,7 @@ const games = {
     }
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(args[0].readAnsiString());
       }
     });
@@ -2160,12 +2160,12 @@ const games = {
     }
 
     Interceptor.attach(nfRunCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         if (logCommands) {
           this.command_line = this.context.rdx.readAnsiString();
         }
       },
-      onLeave: (retval) => {
+      onLeave: function(retval) {
         if (logCommands && checkNotExcluded(this.command_line)) {
           console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
         }
@@ -2220,7 +2220,7 @@ const games = {
     }
 
     Interceptor.attach(npRegisterCommand, {
-      onEnter: args => {
+      onEnter: function(args) {
         commandNames.push(this.context.rdx.readAnsiString());
       }
     });
@@ -2287,7 +2287,7 @@ const games = {
   //   var npRegisterCommand = new NativePointer('');
 
   //   Interceptor.attach(npRegisterCommand, {
-  //     onEnter: args => {
+  //     onEnter: function(args) {
   //       commandNames.push(this.context.rdx.readAnsiString());
   //     }
   //   });
