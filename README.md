@@ -19,6 +19,7 @@ Asobo Studio Games
 * FUEL (US,RU,Steam,Steam Demo)
 * Up (US,RU)
 * A Plague Tale: Innocence (EGS,Steam)
+* A Plague Tale: Requiem (Steam)
 
 Black Sheep Studio Games
 

@@ -2261,6 +2261,106 @@ const games = {
     //   0xfa, 0xa7, 0xf2, 0xff, 0xeb, 0x17, 0x48, 0x8b, 0x05, 0xf9,
     //   0xc6, 0xdf, 0x00, 0x48
     // };
+  },
+
+  ////////////
+  // APlagueTaleRequiem_x64 //
+  ////////////
+
+  "aplaguetalerequiem_x64": () => {
+    const aptModule = Process.enumerateModules()[0];
+
+    for (const module of Process.enumerateModules()) {
+      Memory.protect(module.base, module.size, "rwx");
+    }
+    
+    var nppGlobalCommandState;
+    var nppGlobalCommandStatePattern = "48 8b 0d dc 55 1e 01 4c 8d 9c 24 e0 00 00 00 49 8b 5b 38 49 8b 73 40 49 8b e3 41 5f 41 5e 41 5c 5f 5d e9 24 e8 b2 ff cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc 48 8b c4 48 89";
+    var nppGlobalCommandStateScanResults = Memory.scanSync(aptModule.base, aptModule.size, nppGlobalCommandStatePattern);
+    if (nppGlobalCommandStateScanResults.length != 0) {
+      var callsiteAddress = nppGlobalCommandStateScanResults[0].address;
+      var offsetGlobalCommandState = callsiteAddress.add(3).readU32();
+      nppGlobalCommandState = callsiteAddress.add(offsetGlobalCommandState + 7);
+    } else {
+      console.log("Could not locate the nppGlobalCommandState. Aborting...");
+      return;
+    }
+    // 0x00000001411D17E5 Steam
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x48, 0x8b, 0x0d, 0xdc, 0x55, 0x1e, 0x01, 0x4c, 0x8d, 0x9c,
+    //   0x24, 0xe0, 0x00, 0x00, 0x00, 0x49, 0x8b, 0x5b, 0x38, 0x49,
+    //   0x8b, 0x73, 0x40, 0x49, 0x8b, 0xe3, 0x41, 0x5f, 0x41, 0x5e,
+    //   0x41, 0x5c, 0x5f, 0x5d, 0xe9, 0x24, 0xe8, 0xb2, 0xff, 0xcc,
+    //   0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc,
+    //   0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0xcc, 0x48,
+    //   0x8b, 0xc4, 0x48, 0x89
+    // };
+
+    var nfRunCommand;
+    var nfRunCommandPattern = "48 89 5c 24 08 44 89 44 24 18 48 89 54 24 10 55 56 57 41 54 41 55 41 56 41 57 48 8d ac 24 30 7e ff ff b8 d0 82 00 00 e8 04 91 8f 00 48 2b e0 0f 29 b4 24 c0 82 00 00 0f 29 bc 24 b0 82 00 00 44";
+    var nfRunCommandScanResults = Memory.scanSync(aptModule.base, aptModule.size, nfRunCommandPattern);
+    if (nfRunCommandScanResults.length != 0) {
+      nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer", "int64"], 'win64');
+    } else {
+      console.log("Could not locate the nfRunCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(nfRunCommand, {
+      onEnter: function(args) {
+        if (logCommands) {
+          this.command_line = this.context.rdx.readAnsiString();
+        }
+      },
+      onLeave: function(retval) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
+        }
+      }
+    });
+
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd), 0) };
+    // 0x0000000140D00030 Steam
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x48, 0x89, 0x5c, 0x24, 0x08, 0x44, 0x89, 0x44, 0x24, 0x18,
+    //   0x48, 0x89, 0x54, 0x24, 0x10, 0x55, 0x56, 0x57, 0x41, 0x54,
+    //   0x41, 0x55, 0x41, 0x56, 0x41, 0x57, 0x48, 0x8d, 0xac, 0x24,
+    //   0x30, 0x7e, 0xff, 0xff, 0xb8, 0xd0, 0x82, 0x00, 0x00, 0xe8,
+    //   0x04, 0x91, 0x8f, 0x00, 0x48, 0x2b, 0xe0, 0x0f, 0x29, 0xb4,
+    //   0x24, 0xc0, 0x82, 0x00, 0x00, 0x0f, 0x29, 0xbc, 0x24, 0xb0,
+    //   0x82, 0x00, 0x00, 0x44
+    // };
+  
+    var npRegisterCommand;
+    var npRegisterCommandPattern = "48 89 5c 24 10 4c 89 44 24 18 55 56 57 41 54 41 55 41 56 41 57 48 83 ec 40 4d 8b e9 48 8b fa 4c 8b f1 4c 8d 05 e7 04 30 ff 48 8b 1d 40 b4 d4 00 48 85 d2 74 38 0f b6 02 84 c0 74 31 0f 1f 40 00";
+    var npRegisterCommandScanResults = Memory.scanSync(aptModule.base, aptModule.size, npRegisterCommandPattern);
+    if (npRegisterCommandScanResults.length != 0) {
+      npRegisterCommand = npRegisterCommandScanResults[0].address;
+    } else {
+      console.log("Could not locate the npRegisterCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(npRegisterCommand, {
+      onEnter: function(args) {
+        commandNames.push(this.context.rdx.readAnsiString());
+      }
+    });
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+    // 0x0000000140CFFAF0 Steam
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x48, 0x89, 0x5c, 0x24, 0x10, 0x4c, 0x89, 0x44, 0x24, 0x18,
+    //   0x55, 0x56, 0x57, 0x41, 0x54, 0x41, 0x55, 0x41, 0x56, 0x41,
+    //   0x57, 0x48, 0x83, 0xec, 0x40, 0x4d, 0x8b, 0xe9, 0x48, 0x8b,
+    //   0xfa, 0x4c, 0x8b, 0xf1, 0x4c, 0x8d, 0x05, 0xe7, 0x04, 0x30,
+    //   0xff, 0x48, 0x8b, 0x1d, 0x40, 0xb4, 0xd4, 0x00, 0x48, 0x85,
+    //   0xd2, 0x74, 0x38, 0x0f, 0xb6, 0x02, 0x84, 0xc0, 0x74, 0x31,
+    //   0x0f, 0x1f, 0x40, 0x00
+    // };
   } //,
 
   // ////////////
