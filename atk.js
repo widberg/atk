@@ -1,3 +1,18 @@
+// Hide IsDebuggerPresent
+// Mostly for A Plague Tale Requiem, but it doesn't hurt to have for the others
+// You may also have to create a steam_appid.txt depending on the game
+const mKernel32 = Module.load("kernel32.dll");
+mKernel32.ensureInitialized("kernel32.dll");
+
+const fIsDebuggerPresent = mKernel32.getExportByName("IsDebuggerPresent");
+console.log(fIsDebuggerPresent);
+
+Interceptor.attach(fIsDebuggerPresent, {
+    onLeave: function (retval) {
+        retval.replace(0);
+    }
+});
+
 var commandNames = [];
 var excludedCommands = [];
 var logCommands = false;
