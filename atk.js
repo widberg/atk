@@ -5,7 +5,6 @@ const mKernel32 = Module.load("kernel32.dll");
 mKernel32.ensureInitialized("kernel32.dll");
 
 const fIsDebuggerPresent = mKernel32.getExportByName("IsDebuggerPresent");
-console.log(fIsDebuggerPresent);
 
 Interceptor.attach(fIsDebuggerPresent, {
     onLeave: function (retval) {
@@ -2098,6 +2097,104 @@ const games = {
     // const uint8_t buffer[_BUFFER_SIZE] = {
     //   0x51, 0x53, 0x55, 0x56, 0x57, 0x8b, 0xd9, 0x68, 0xdc, 0x00,
     //   0x00, 0x00, 0x89, 0x5c, 0x24, 0x14, 0xe8, 0x25, 0xbc, 0x0c,
+    //   0x00, 0x33, 0xf6, 0x83, 0xc4, 0x04, 0x3b, 0xc6, 0x74, 0x16,
+    //   0x89, 0xb0, 0xd4, 0x00, 0x00, 0x00, 0x89, 0xb0, 0xd8, 0x00,
+    //   0x00, 0x00, 0x89, 0xb0, 0xd0, 0x00, 0x00, 0x00, 0x8b, 0xe8,
+    //   0xeb, 0x02, 0x33, 0xed, 0x8b, 0x7c, 0x24, 0x18, 0x8b, 0xd7,
+    //   0x8b, 0xc5, 0x2b, 0xd5
+    // };
+  },
+
+  "noddy": () => {
+    const noddyModule = Process.enumerateModules()[0];
+
+    for (const module of Process.enumerateModules()) {
+      Memory.protect(module.base, module.size, "rwx");
+    }
+ 
+    var nppGlobalCommandState;
+    var nppGlobalCommandStatePattern = "8b 0d 98 fb 5f 00 68 00 a0 5d 00 e8 9e b6 fb ff 8b 0d ac fb 5f 00 8b 11 ff 52 40 8d 49 00 a0 0c 66 60 00 84 c0 75 f7 a1 ac fb 5f 00 8b 0d a0 fb 5f 00 83 c0 20 50 e8 03 59 fb ff 85 c0 74 1c 8b";
+    var nppGlobalCommandStateScanResults = Memory.scanSync(noddyModule.base, noddyModule.size, nppGlobalCommandStatePattern);
+    if (nppGlobalCommandStateScanResults.length != 0) {
+      nppGlobalCommandState = nppGlobalCommandStateScanResults[0].address.add(2).readPointer();
+    } else {
+      console.log("Could not locate the nppGlobalCommandState. Aborting...");
+      return;
+    }
+    
+    // 0x00515912 PL
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x8b, 0x0d, 0x98, 0xfb, 0x5f, 0x00, 0x68, 0x00, 0xa0, 0x5d,
+    //   0x00, 0xe8, 0x9e, 0xb6, 0xfb, 0xff, 0x8b, 0x0d, 0xac, 0xfb,
+    //   0x5f, 0x00, 0x8b, 0x11, 0xff, 0x52, 0x40, 0x8d, 0x49, 0x00,
+    //   0xa0, 0x0c, 0x66, 0x60, 0x00, 0x84, 0xc0, 0x75, 0xf7, 0xa1,
+    //   0xac, 0xfb, 0x5f, 0x00, 0x8b, 0x0d, 0xa0, 0xfb, 0x5f, 0x00,
+    //   0x83, 0xc0, 0x20, 0x50, 0xe8, 0x03, 0x59, 0xfb, 0xff, 0x85,
+    //   0xc0, 0x74, 0x1c, 0x8b
+    // };
+ 
+    var nfRunCommand;
+    var nfRunCommandPattern = "81 ec 8c 08 00 00 a1 08 48 60 00 33 c4 53 8b 9c 24 94 08 00 00 89 84 24 8c 08 00 00 8b c3 57 8b f9 89 5c 24 0c 8d 50 01 8a 08 40 84 c9 75 f9 2b c2 89 44 24 08 75 07 32 c0 e9 1a 04 00 00 55 33";
+    var nfRunCommandScanResults = Memory.scanSync(noddyModule.base, noddyModule.size, nfRunCommandPattern);
+    if (nfRunCommandScanResults.length != 0) {
+      nfRunCommand = new NativeFunction(nfRunCommandScanResults[0].address, "bool", ["pointer", "pointer"], 'thiscall');
+    } else {
+      console.log("Could not locate the nfRunCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(nfRunCommand, {
+      onEnter: function(args) {
+        if (logCommands) {
+          this.command_line = args[0].readAnsiString();
+        }
+      },
+      onLeave: function(retval) {
+        if (logCommands && checkNotExcluded(this.command_line)) {
+          console.log("\"" + this.command_line + "\" " + (retval.toInt32() & 0xFF));
+        }
+      }
+    });
+
+    globalThis.runCommand = cmd => { nfRunCommand(nppGlobalCommandState.readPointer(), Memory.allocUtf8String(cmd)) };
+            
+    // 0x004D0FC0 PL
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x81, 0xec, 0x8c, 0x08, 0x00, 0x00, 0xa1, 0x08, 0x48, 0x60,
+    //   0x00, 0x33, 0xc4, 0x53, 0x8b, 0x9c, 0x24, 0x94, 0x08, 0x00,
+    //   0x00, 0x89, 0x84, 0x24, 0x8c, 0x08, 0x00, 0x00, 0x8b, 0xc3,
+    //   0x57, 0x8b, 0xf9, 0x89, 0x5c, 0x24, 0x0c, 0x8d, 0x50, 0x01,
+    //   0x8a, 0x08, 0x40, 0x84, 0xc9, 0x75, 0xf9, 0x2b, 0xc2, 0x89,
+    //   0x44, 0x24, 0x08, 0x75, 0x07, 0x32, 0xc0, 0xe9, 0x1a, 0x04,
+    //   0x00, 0x00, 0x55, 0x33
+    // };
+ 
+    var npRegisterCommand;
+    var npRegisterCommandPattern = "51 53 55 56 57 8b d9 68 dc 00 00 00 89 5c 24 14 e8 88 58 0d 00 33 f6 83 c4 04 3b c6 74 16 89 b0 d4 00 00 00 89 b0 d8 00 00 00 89 b0 d0 00 00 00 8b e8 eb 02 33 ed 8b 7c 24 18 8b d7 8b c5 2b d5";
+    var npRegisterCommandScanResults = Memory.scanSync(noddyModule.base, noddyModule.size, npRegisterCommandPattern);
+    if (npRegisterCommandScanResults.length != 0) {
+      npRegisterCommand = npRegisterCommandScanResults[0].address;
+    } else {
+      console.log("Could not locate the npRegisterCommand. Aborting...");
+      return;
+    }
+
+    Interceptor.attach(npRegisterCommand, {
+      onEnter: function(args) {
+        commandNames.push(args[0].readAnsiString());
+      }
+    });
+
+    globalThis.dumpCommandNames = () => { console.log(commandNames); };
+    globalThis.dumpCommandNamesPretty = () => { console.log(commandNames.join("\n")); };
+
+    // 0x004D0BF0 PL
+    // #define _BUFFER_SIZE 64
+    // const uint8_t buffer[_BUFFER_SIZE] = {
+    //   0x51, 0x53, 0x55, 0x56, 0x57, 0x8b, 0xd9, 0x68, 0xdc, 0x00,
+    //   0x00, 0x00, 0x89, 0x5c, 0x24, 0x14, 0xe8, 0x88, 0x58, 0x0d,
     //   0x00, 0x33, 0xf6, 0x83, 0xc4, 0x04, 0x3b, 0xc6, 0x74, 0x16,
     //   0x89, 0xb0, 0xd4, 0x00, 0x00, 0x00, 0x89, 0xb0, 0xd8, 0x00,
     //   0x00, 0x00, 0x89, 0xb0, 0xd0, 0x00, 0x00, 0x00, 0x8b, 0xe8,

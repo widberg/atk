@@ -25,6 +25,7 @@ Black Sheep Studio Games
 
 * Championsheep Rally
 * The Ugly Duckling and Me
+* En taxi avec Oui-Oui (PL)
 * The Magic Roundabout
 
 ## Documentation
